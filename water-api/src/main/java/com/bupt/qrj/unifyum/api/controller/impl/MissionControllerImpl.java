@@ -836,7 +836,7 @@ public class MissionControllerImpl implements MissionController {
                     data1.put("worker", searchDO.getWorker_name());
                     data1.put("finish_time",searchDO.getFinish_time());
 
-
+                    data1.put("mission_condition",searchDO.getMission_condition());
 
                     searchdata.add(data1);
                 }
@@ -1681,18 +1681,13 @@ public class MissionControllerImpl implements MissionController {
                     }
 
                     ArrayList<JSONObject> eventData = new ArrayList<JSONObject>();
-                    System.out.println("1111");
+
                     String event_id = MissionDetailDAO.get_event(MissionId);
-                    List<EventDetailDO> eventInfo = MissionDetailDAO.Event_Detail(MissionId,event_id);
+                    List<missionJsonDO> eventInfo = MissionDetailDAO.Event_Detail(MissionId,event_id);
                     System.out.println(event_id);
-                    for(EventDetailDO EventInfoDO : eventInfo){
-                        JSONObject data1 = new JSONObject();
-                        data1.put("event_ID",EventInfoDO.getEvent_id());
-                        data1.put("event_name",EventInfoDO.getEvent_name());
-                        data1.put("font_color",EventInfoDO.getFont_color());
-                        data1.put("font_size",EventInfoDO.getFont_size());
-                        data1.put("work",EventInfoDO.getData());
-                        eventData.add(data1);
+                    for(missionJsonDO EventInfoDO : eventInfo){
+                        JSONObject jsonObject = JSONObject.parseObject(EventInfoDO.getBig_json());
+                        eventData.add(jsonObject);
                     }
 
                     ArrayList<JSONObject> noteData = new ArrayList<JSONObject>();

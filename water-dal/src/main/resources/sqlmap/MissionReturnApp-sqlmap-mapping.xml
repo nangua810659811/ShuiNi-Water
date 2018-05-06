@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="GB2312" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="unifyum">
+
+	<resultMap id="RM.MissionReturn"
+		class="com.bupt.qrj.unifyum.dal.dataobject.MissionReturnDO">
+		<result property="column_key" column="column_key" javaType="java.lang.String"
+				jdbcType="VARCHAR" nullValue="0"/>
+		<result property="note_name" column="note_name" javaType="java.lang.String"
+				jdbcType="VARCHAR" nullValue="0"/>
+		<result property="note_content" column="note_content" javaType="java.lang.String"
+				jdbcType="VARCHAR" nullValue="0"/>
+		<result property="font_color" column="font_color" javaType="java.lang.String"
+				jdbcType="VARCHAR" nullValue="0"/>
+		<result property="font_size" column="font_size" javaType="java.lang.String"
+				jdbcType="VARCHAR" nullValue="0"/>
+		<result property="level_one" column="level_one" javaType="java.lang.String"
+				jdbcType="VARCHAR" nullValue="0"/>
+		<result property="level_two" column="level_two" javaType="java.lang.String"
+				jdbcType="VARCHAR" nullValue="0"/>
+
+	</resultMap>
+
+	<resultMap id="RM.Event_Info"
+			   class="com.bupt.qrj.unifyum.dal.dataobject.EventInfoDO">
+		<result property="event_id" column="event_id" javaType="java.lang.String"
+				jdbcType="VARCHAR" nullValue="0"/>
+		<result property="additions" column="additions" javaType="java.lang.String"
+				jdbcType="VARCHAR" nullValue="0"/>
+		<result property="font_color" column="font_color" javaType="java.lang.String"
+				jdbcType="VARCHAR" nullValue="0"/>
+		<result property="font_size" column="font_size" javaType="java.lang.String"
+				jdbcType="VARCHAR" nullValue="0"/>
+		<result property="event_name" column="event_name" javaType="java.lang.String"
+				jdbcType="VARCHAR" nullValue="0"/>
+
+	</resultMap>
+	<resultMap id="RM.Event_Detail"
+			   class="com.bupt.qrj.unifyum.dal.dataobject.EventDetailDO">
+		<result property="event_id" column="event_id" javaType="java.lang.String"
+				jdbcType="int" nullValue="0"/>
+		<result property="mission_id" column="mission_id" javaType="java.lang.String"
+				jdbcType="int" nullValue="0"/>
+		<result property="data" column="data" javaType="java.lang.String"
+				jdbcType="VARCHAR" nullValue="0"/>
+		<result property="event_name" column="event_name" javaType="java.lang.String"
+				jdbcType="VARCHAR" nullValue="0"/>
+		<result property="font_color" column="font_color" javaType="java.lang.String"
+				jdbcType="VARCHAR" nullValue="0"/>
+		<result property="font_size" column="font_size" javaType="java.lang.String"
+				jdbcType="VARCHAR" nullValue="0"/>
+	</resultMap>
+
+
+	<resultMap id="RM.Event_Detail1"
+			   class="com.bupt.qrj.unifyum.dal.dataobject.EventDetail1DO">
+		<result property="auditor" column="auditor" javaType="java.lang.String"
+				jdbcType="VARCHAR" nullValue="0"/>
+		<result property="auditor_opinion" column="auditor_opinion" javaType="java.lang.String"
+				jdbcType="VARCHAR" nullValue="0"/>
+		<result property="auditor_time" column="auditor_time" javaType="java.lang.String"
+				jdbcType="VARCHAR" nullValue="0"/>
+
+	</resultMap>
+	<resultMap id="RM.Event_Detail11"
+			   class="com.bupt.qrj.unifyum.dal.dataobject.missionJsonDO">
+		<!--<result property="mission_id" column="mission_id" javaType="java.lang.String"-->
+				<!--jdbcType="VARCHAR" nullValue="0"/>-->
+		<!--<result property="auditor_opinion" column="auditor_opinion" javaType="java.lang.String"-->
+				<!--jdbcType="VARCHAR" nullValue="0"/>-->
+		<result property="big_json" column="big_json" javaType="java.lang.String"
+				jdbcType="VARCHAR" nullValue="0"/>
+
+	</resultMap>
+	<select id="Mission-Return-Key1" resultClass="java.lang.String">
+		select column_key from mission_app_return;
+	</select>
+
+	<select id="Mission-auditor1" resultMap="RM.Event_Detail1" >
+		select auditor,auditor_opinion,auditor_time from mission where id =#mission_id#;
+	</select>
+
+	<select id="Mission-Value1" parameterClass="map" resultClass="java.lang.String" remapResults="true" >
+		select $column_key$ from mission where id = #mission_id#;
+	</select>
+
+	<select id="Mission-Value-11" parameterClass="map" resultClass="java.lang.String" remapResults="true" >
+		select $column_key$ from mission where mission_name = #mission#;
+	</select>
+
+	<update id="Mission-Return-UPDATE1">
+		update mission_app_return set note_content=#note_content# where column_key=#column_key#;
+	</update>
+
+	<select id="Mission-Return-List1" resultMap="RM.MissionReturn" >
+		select column_key,note_name,note_content,font_color,font_size,level_one,level_two from mission_return where level_one = #level_one#;
+	</select>
+
+
+	<select id="Mission-Event-List1" resultClass="java.lang.String" >
+		select event from mission where id = #mission_id#;
+	</select>
+
+	<select id="Mission-Return-first1" resultMap="RM.MissionReturn" >
+		select column_key,note_name,note_content,font_color,font_size,level_one,level_two from mission_app_return where column_key = "id";
+	</select>
+
+	<select id="Mission-Event-Info1" resultMap="RM.Event_Info" >
+		select event_id,additions,font_color,font_size,event_name from event_info where event_id in ($event_id$);
+	</select>
+
+
+	<select id="Mission-Event-Detail1" resultMap="RM.Event_Detail11" >
+		select big_json from mission_json where mission_id = #mission_id#;
+	</select>
+	<!--<select id="USER-LIST" resultClass="java.lang.String">-->
+		<!--select user_name from  login	group by user_name;		-->
+	<!--</select>-->
+
+	<!--<select id="UNIFYUM-USER-GET" parameterClass="com.bupt.qrj.unifyum.dal.dataobject.UserDO"-->
+		<!--resultMap="RM.User">-->
+		<!--select * from user-->
+		<!--<dynamic prepend="where">-->
+			<!--<isNotNull prepend="AND" property="userName">-->
+				<!--user_name = #userName#-->
+			<!--</isNotNull>-->
+		<!--</dynamic>-->
+	<!--</select>-->
+
+</sqlMap>

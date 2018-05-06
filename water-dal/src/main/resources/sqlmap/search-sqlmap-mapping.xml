@@ -11,11 +11,12 @@
 			    jdbcType="int" nullValue="0"/>
         <result property="worker_name" column="worker_name" javaType="java.lang.String"
                 jdbcType="varchar" nullValue="0"/>
-
+		<result property="mission_condition" column="mission_condition" javaType="java.lang.String"
+				jdbcType="varchar" nullValue="0"/>
 	</resultMap>
 
 	<select id="search-mission" resultMap="RM.search">
-		select finish_time, id, worker_name
+		select mission_condition,finish_time, id, worker_name
 		from mission where worker_name like concat('%', #worker_name#, '%') and mission_name like concat('%', #mission_name#, '%')
 		and mission_type like concat('%', #mission_type#, '%')		and mission_level like concat('%', #mission_level#, '%')
 		and send_time between #timemin# and #timemax#;

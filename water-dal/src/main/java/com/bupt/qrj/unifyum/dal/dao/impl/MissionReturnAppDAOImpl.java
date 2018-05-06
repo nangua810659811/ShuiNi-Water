@@ -3,9 +3,10 @@
  */
 package com.bupt.qrj.unifyum.dal.dao.impl;
 
-import com.bupt.qrj.unifyum.dal.dao.MissionDetailDAO;
+import com.bupt.qrj.unifyum.dal.dao.MissionReturnAppDAO;
 import com.bupt.qrj.unifyum.dal.dao.MissionReturnDAO;
-import com.bupt.qrj.unifyum.dal.dataobject.*;
+import com.bupt.qrj.unifyum.dal.dataobject.EventInfoDO;
+import com.bupt.qrj.unifyum.dal.dataobject.MissionReturnDO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
@@ -20,12 +21,12 @@ import java.util.List;
  *
  */
 @SuppressWarnings("deprecation")
-public class MissionDetailDAOImpl extends SqlMapClientDaoSupport implements
-        MissionDetailDAO {
+public class MissionReturnAppDAOImpl extends SqlMapClientDaoSupport implements
+        MissionReturnAppDAO {
 
 	/** 日志 **/
 	private static final Logger LOGGER = LoggerFactory
-			.getLogger(MissionDetailDAOImpl.class);
+			.getLogger(MissionReturnAppDAOImpl.class);
 
 
 
@@ -34,7 +35,7 @@ public class MissionDetailDAOImpl extends SqlMapClientDaoSupport implements
 		LOGGER.debug("do the user list start");
 
 		List<String> rets = this.getSqlMapClientTemplate().queryForList(
-				"Mission-Return-Key1",mission_id);
+				"Mission-Return-Key",mission_id);
 		LOGGER.debug("do the TestData user list over");
 		if (rets == null || rets.size() == 0) {
 			LOGGER.debug("do the user list return null");
@@ -53,7 +54,7 @@ public class MissionDetailDAOImpl extends SqlMapClientDaoSupport implements
         abc.put("mission_id",mission_id);
 
         String rets = (String) this.getSqlMapClientTemplate()
-				.queryForObject("Mission-Value1", abc);
+				.queryForObject("Mission-Value", abc);
 
         return rets;
 	}
@@ -65,7 +66,7 @@ public class MissionDetailDAOImpl extends SqlMapClientDaoSupport implements
         }
 
 
-        this.getSqlMapClientTemplate().update("Mission-Return-UPDATE1",
+        this.getSqlMapClientTemplate().update("Mission-Return-UPDATE",
                 missionReturnDO);
 
     }
@@ -79,7 +80,7 @@ public class MissionDetailDAOImpl extends SqlMapClientDaoSupport implements
         abb.put("level_two",level_two);
         abb.put("level_one",level_one);
         List<MissionReturnDO> rets = this.getSqlMapClientTemplate().queryForList(
-                "Mission-Return-List1",abb);
+                "Mission-Return-List",abb);
         LOGGER.debug("do the TestData user list over");
         if (rets == null || rets.size() == 0) {
             LOGGER.debug("do the user list return null");
@@ -97,14 +98,12 @@ public class MissionDetailDAOImpl extends SqlMapClientDaoSupport implements
         return rets;
     }
 
-    public List<missionJsonDO> Event_Detail(String mission_id,String event_id) {
+    public List<EventInfoDO> Event_list(String event_id) {
 
         LOGGER.debug("do the user list start");
-        HashMap<String,Object> abb = new HashMap<String, Object>();
-        abb.put("mission_id",mission_id);
-        abb.put("event_id",event_id);
-        List<missionJsonDO> rets = this.getSqlMapClientTemplate().queryForList(
-                "Mission-Event-Detail1",abb);
+
+        List<EventInfoDO> rets = this.getSqlMapClientTemplate().queryForList(
+                "Mission-Event-Info",event_id);
         LOGGER.debug("do the TestData user list over");
         if (rets == null || rets.size() == 0) {
             LOGGER.debug("do the user list return null");
@@ -113,28 +112,10 @@ public class MissionDetailDAOImpl extends SqlMapClientDaoSupport implements
 
         return rets;
     }
-
-    public List<EventDetail1DO> Event_Detail1(String mission_id) {
-
-//        LOGGER.debug("do the user list start");
-//        HashMap<String,Object> abb = new HashMap<String, Object>();
-//        abb.put("mission_id",mission_id);
-
-        List<EventDetail1DO> rets = this.getSqlMapClientTemplate().queryForList(
-                "Mission-auditor1",mission_id);
-        LOGGER.debug("do the TestData user list over");
-        if (rets == null || rets.size() == 0) {
-            LOGGER.debug("do the user list return null");
-            return null;
-        }
-
-        return rets;
-    }
-
     public MissionReturnDO get_first() throws DataAccessException {
 
          MissionReturnDO resultDO = (MissionReturnDO) this.getSqlMapClientTemplate()
-                .queryForObject("Mission-Return-first1");
+                .queryForObject("Mission-Return-first");
 
         return resultDO;
     }

@@ -3,7 +3,8 @@
  */
 package com.bupt.qrj.unifyum.dal.dao;
 
-import com.bupt.qrj.unifyum.dal.dataobject.*;
+import com.bupt.qrj.unifyum.dal.dataobject.EventInfoDO;
+import com.bupt.qrj.unifyum.dal.dataobject.MissionReturnDO;
 import org.springframework.dao.DataAccessException;
 
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
  *         unifyum-dal 用途:
  *
  */
-public interface MissionDetailDAO {
+public interface MissionReturnAppDAO {
 
 
 
@@ -27,9 +28,7 @@ public interface MissionDetailDAO {
 
     public String get_event(String mission_id) throws DataAccessException;
 
-    public List<missionJsonDO> Event_Detail(String mission_id, String event_id);
+    public List<EventInfoDO> Event_list(String event_id);
 
     public MissionReturnDO get_first() throws DataAccessException;
-
-    public List<EventDetail1DO> Event_Detail1(String mission_id);
 }

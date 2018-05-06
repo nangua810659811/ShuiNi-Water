@@ -31,4 +31,5 @@
     <sqlMap resource="sqlmap/arrfeedback-sqlmap-mapping.xml" />
 	<sqlMap resource="sqlmap/addauditor-sqlmap-mapping.xml" />
     <sqlMap resource="sqlmap/arrsetmis-sqlmap-mapping.xml" />
+	<sqlMap resource="sqlmap/MissionReturnApp-sqlmap-mapping.xml" />
 </sqlMapConfig>

@@ -42,9 +42,13 @@ public class searchDO {
 
 
 
+	private String mission_condition;
 
+	public String getMission_condition() {
+		return mission_condition;
+	}
 
-
-
-	
+	public void setMission_condition(String mission_condition) {
+		this.mission_condition = mission_condition;
+	}
 }
