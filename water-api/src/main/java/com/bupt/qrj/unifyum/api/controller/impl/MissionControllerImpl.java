@@ -9,6 +9,10 @@ import com.bupt.qrj.unifyum.api.controller.MissionController;
 import com.bupt.qrj.unifyum.dal.dao.impl.*;
 import com.bupt.qrj.unifyum.dal.dataobject.*;
 import com.bupt.qrj.unifyum.util.http.HttpOutUtil;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -17,13 +21,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author renjun.qrj 2015年10月31日:下午8:43:02
@@ -34,8 +37,6 @@ import java.util.List;
 @Controller
 @RequestMapping("/mission.req")
 public class MissionControllerImpl implements MissionController {
-
-
 
 	/** 日志 **/
     private static final Logger LOGGER = LoggerFactory.getLogger(MissionControllerImpl.class);
@@ -48,6 +49,7 @@ public class MissionControllerImpl implements MissionController {
 	}
     ApplicationContext context = getContext();
 
+//, produces = "application/json; charset=utf-8"
     @RequestMapping(method = { RequestMethod.POST }, params = "action=MissionReturn")
     public void MissionReturn(HttpServletRequest request, HttpServletResponse response) {
     	
@@ -803,7 +805,7 @@ public class MissionControllerImpl implements MissionController {
             String time2 = request.getParameter("time2");
             String worker = request.getParameter("worker");
             String mission_name = request.getParameter("mission_name");
-            String mission_level = request.getParameter("mission_level");
+            String mission_condition = request.getParameter("mission_condition");
             String mission_type = request.getParameter("mission_type");
 
 
@@ -811,15 +813,15 @@ public class MissionControllerImpl implements MissionController {
             String timemax = time2 +" 00:00:00";
             if(worker==null||worker.isEmpty())
                 worker="";
-            if(mission_level==null||mission_level.isEmpty())
-                mission_level="";
+            if(mission_condition==null||mission_condition.isEmpty())
+                mission_condition="";
             if(mission_name==null||mission_name.isEmpty())
                 mission_name="";
             if (mission_type==null||mission_type.isEmpty())
                 mission_type="";
 
 
-            List<searchDO> search = searchDAO.list(worker,mission_name,mission_type,mission_level,timemin,timemax);
+            List<searchDO> search = searchDAO.list(worker,mission_name,mission_type,mission_condition,timemin,timemax);
             if (search.isEmpty()) {
                 result.put("result", 10002);
                 result.put("errMsg", "没有数据");
@@ -1789,8 +1791,8 @@ public class MissionControllerImpl implements MissionController {
         // 输出结果
         HttpOutUtil.outData(response, JSONObject.toJSONString(result));
     }
-
-    @RequestMapping(method = { RequestMethod.POST }, params = "action=missionJson", produces = "application/json; charset=utf-8")
+//, produces = "application/json; charset=utf-8"
+    @RequestMapping(method = { RequestMethod.POST }, params = "action=missionJson")
     public void missionFeedback(HttpServletRequest request, HttpServletResponse response) {
 
         //ApplicationContext context = getContext();
@@ -2074,7 +2076,7 @@ public class MissionControllerImpl implements MissionController {
             String report_worker = request.getParameter("abnormal_person");
             String report_time = request.getParameter("abnormal_time");
             String workshop = request.getParameter("workshop");
-
+            String pic = request.getParameter("pic");
 
             if (checkpoint == null || checkpoint.isEmpty() ||workshop == null || workshop.isEmpty()||report_worker == null || report_worker.isEmpty() ) {
                 result.put("errMsg", "输入参数有误");
@@ -2089,6 +2091,7 @@ public class MissionControllerImpl implements MissionController {
                 insertExceptionDO.setReport_worker(report_worker);
                 insertExceptionDO.setReport_time(report_time);
                 insertExceptionDO.setWorkshop(workshop);
+                insertExceptionDO.setPic(pic);
                 insertExceptionDAO.insert(insertExceptionDO);
                 System.out.println("insert-ok\\\"1\\\"||\\\"2\\\"");
                 result.put("errMsg", "保存成功！");
@@ -2104,5 +2107,48 @@ public class MissionControllerImpl implements MissionController {
         HttpOutUtil.outData(response, JSONObject.toJSONString(result));
     }
 
+
+
+//    @RequestMapping(method = { RequestMethod.POST }, params = "action=send")
+//    public void send(HttpServletRequest request, HttpServletResponse response) {
+//
+//
+//        JSONObject result1 = new JSONObject();
+//        result1.put("success", "hh");
+//        try{
+//
+//
+//            Map<String,String> test = new HashMap<>();
+//            test.put("MissionId","2");
+//            test.put("MissionId1","21");
+//            FormBody.Builder bodyBuilder = new FormBody.Builder();
+//            test.forEach(bodyBuilder::add);
+//            Request request1 = new Request.Builder()
+//                    .url("http://123.206.16.157:8080/water/mission.req?action=missiondetail")
+//                    .header("Content-Type","application/x-www-form-urlencoded;charset=UTF-8")
+//                    .post(bodyBuilder.build())
+//                    .build();
+//
+//            JSONObject result;
+//            try(Response response1 = OkHttpClient.newCall(request1).execute()){
+//                if(response1 == null||response1.body()==null){
+//                    System.out.println("null");
+//                }else{
+//
+//                    System.out.println("----------");
+//                    result = JSONObject.parseObject(response1.body().string());
+//                    System.out.println(result.toString());
+//                }
+//
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
+//
+//        HttpOutUtil.outData(response, JSONObject.toJSONString(result1));
+//    }
 
 }

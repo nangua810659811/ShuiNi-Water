@@ -18,7 +18,7 @@
 	<select id="search-mission" resultMap="RM.search">
 		select mission_condition,finish_time, id, worker_name
 		from mission where worker_name like concat('%', #worker_name#, '%') and mission_name like concat('%', #mission_name#, '%')
-		and mission_type like concat('%', #mission_type#, '%')		and mission_level like concat('%', #mission_level#, '%')
+		and mission_type like concat('%', #mission_type#, '%')		and mission_condition like concat('%', #mission_condition#, '%')
 		and send_time between #timemin# and #timemax#;
 	</select>
 

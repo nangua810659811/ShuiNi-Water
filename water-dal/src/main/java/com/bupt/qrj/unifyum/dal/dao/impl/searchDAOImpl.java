@@ -24,13 +24,13 @@ public class searchDAOImpl extends SqlMapClientDaoSupport implements searchDAO {
     
 	 /** 日志 **/
 /*    private static final Logger LOGGER = LoggerFactory.getLogger(seekwjsDAOImpl.class);*/
-    public List<searchDO> list(String worker_name,String mission_name,String mission_type,String mission_level,String timemin,String timemax) {
+    public List<searchDO> list(String worker_name,String mission_name,String mission_type,String mission_condition,String timemin,String timemax) {
 
         HashMap<String,Object> abbs = new HashMap<String,Object>();
         abbs.put("worker_name",worker_name);
         abbs.put("mission_name",mission_name);
         abbs.put("mission_type",mission_type);
-        abbs.put("mission_level",mission_level);
+        abbs.put("mission_condition",mission_condition);
         abbs.put("timemin",timemin);
         abbs.put("timemax",timemax);
         List<searchDO> rets = this.getSqlMapClientTemplate().queryForList("search-mission",abbs);

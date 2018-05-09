@@ -18,7 +18,7 @@ public interface searchDAO {
 	
 
 	
-	public List<searchDO> list(String worker_name,String mission_name,String mission_type,String mission_level,String timemin,String timemax);
+	public List<searchDO> list(String worker_name,String mission_name,String mission_type,String mission_condition,String timemin,String timemax);
 
 
 }

@@ -74,5 +74,14 @@ public class insertExceptionDO {
 	private String level;
 
 	private String report_worker;
-	
+
+	public String getPic() {
+		return pic;
+	}
+
+	public void setPic(String pic) {
+		this.pic = pic;
+	}
+
+	private String pic;
 }
