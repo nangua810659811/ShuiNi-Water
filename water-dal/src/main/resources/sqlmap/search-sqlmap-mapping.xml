@@ -15,6 +15,16 @@
 				jdbcType="varchar" nullValue="0"/>
 	</resultMap>
 
+    <resultMap id="RM.search1"
+               class="com.bupt.qrj.unifyum.dal.dataobject.searchtestDO">
+
+        <result property="time" column="time" javaType="DATE"
+                jdbcType="DATE" nullValue="0"/>
+        <result property="id" column="id" javaType="java.lang.String"
+                jdbcType="int" nullValue="0"/>
+
+    </resultMap>
+
 	<select id="search-mission" resultMap="RM.search">
 		select mission_condition,finish_time, id, worker_name
 		from mission where worker_name like concat('%', #worker_name#, '%') and mission_name like concat('%', #mission_name#, '%')
@@ -22,6 +32,9 @@
 		and send_time between #timemin# and #timemax#;
 	</select>
 
+	<select id="search-test" resultMap="RM.search1">
+		select time,id from test;
+	</select>
     <!--mission_condition = '1' and-->
 <!--    	<select id="seek-wjs" parameterClass="com.bupt.qrj.unifyum.dal.dataobject.seekwjsDO"
                 resultMap="RM.seekwjs">

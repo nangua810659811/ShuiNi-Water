@@ -5,6 +5,7 @@ package com.bupt.qrj.unifyum.dal.dao;
 
 
 import com.bupt.qrj.unifyum.dal.dataobject.searchDO;
+import com.bupt.qrj.unifyum.dal.dataobject.searchtestDO;
 
 import java.util.List;
 
@@ -20,5 +21,5 @@ public interface searchDAO {
 	
 	public List<searchDO> list(String worker_name,String mission_name,String mission_type,String mission_condition,String timemin,String timemax);
 
-
+	public List<searchtestDO> list_test();
 }

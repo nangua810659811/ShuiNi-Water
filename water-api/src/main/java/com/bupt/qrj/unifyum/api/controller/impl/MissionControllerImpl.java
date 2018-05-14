@@ -26,7 +26,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
+import java.util.Date;
 
 /**
  * @author renjun.qrj 2015年10月31日:下午8:43:02
@@ -1571,7 +1574,7 @@ public class MissionControllerImpl implements MissionController {
         HttpOutUtil.outData(response, JSONObject.toJSONString(data));
     }
 
-    @RequestMapping(method = { RequestMethod.POST }, params = "action=mission_feedback")
+    @RequestMapping(method = { RequestMethod.POST }, params = "action=mission_feedback", produces = "application/json; charset=utf-8")
     public void mission_feedback(HttpServletRequest request, HttpServletResponse response) {
 
         //ApplicationContext context = getContext();
@@ -1607,7 +1610,7 @@ public class MissionControllerImpl implements MissionController {
                         fddata.setTime(time);
                         feedbackDAO.insertdata(fddata);
                     }else{
-                        pic = "\\WEB-INF\\upload\\"+pic+".jpg";
+                        pic = pic+".jpg";
                         feedbackDO fdpic = new feedbackDO();
                         fdpic.setMission_id(mission_id);
                         fdpic.setWork_name(work_name);
@@ -1626,7 +1629,7 @@ public class MissionControllerImpl implements MissionController {
                         fddata.setTime(time);
                         feedbackDAO.updatedata(fddata);
                     }else{
-                        pic = "\\WEB-INF\\upload\\"+pic+".jpg";
+                        pic = pic+".jpg";
                         feedbackDO fdpic = new feedbackDO();
                         fdpic.setMission_id(mission_id);
                         fdpic.setWork_name(work_name);
@@ -2108,7 +2111,41 @@ public class MissionControllerImpl implements MissionController {
     }
 
 
+    @RequestMapping(method = { RequestMethod.POST }, params = "action=searchtest")
+    public void searchtest(HttpServletRequest request, HttpServletResponse response) {
 
+        //ApplicationContext context = getContext();
+        searchDAOImpl searchDAO = (searchDAOImpl) context.getBean("searchDAO");
+
+        JSONObject result = new JSONObject();
+        result.put("result", "10001");
+
+        try {
+
+            List<searchtestDO> search = searchDAO.list_test();
+
+            int i = 1;
+                for (searchtestDO searchDO : search){
+
+                    if(searchDO.getTime().after(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()))){
+                        continue;
+                    }
+                        System.out.println("add to list"+searchDO.getTime());
+
+                }
+
+
+
+
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+
+        // 输出结果
+        HttpOutUtil.outData(response, JSONObject.toJSONString(result));
+    }
 //    @RequestMapping(method = { RequestMethod.POST }, params = "action=send")
 //    public void send(HttpServletRequest request, HttpServletResponse response) {
 //

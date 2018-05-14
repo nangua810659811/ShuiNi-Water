@@ -66,15 +66,14 @@ public class Filedownload extends HttpServlet{
 //            }
 
             //String path = "D:\\Program Files\\Apache Software Foundation\\apache-tomcat-7.0.73\\webapps\\water" +patha;
-            String path = "C:\\apache-tomcat-8.5.23\\webapps\\water" +patha;
+            String path = "C:\\apache-tomcat-8.5.23\\webapps\\water\\WEB-INF\\upload\\" +patha;
 
             /*String pathb = "F:\\upload\\abc.jpg";*/
             //witcher3
 
-            String[] ary = patha.split("\\\\");
-            String fileName = ary[3];
-            System.out.println(fileName);
-            System.out.println(path);
+
+            String fileName = patha;
+
 
 
 			File file = new File(path);
@@ -124,15 +123,13 @@ public class Filedownload extends HttpServlet{
 //            }
 
 		//String path = "D:\\Program Files\\Apache Software Foundation\\apache-tomcat-7.0.73\\webapps\\water" +patha;
-		String path = "C:\\apache-tomcat-8.5.23\\webapps\\water" +patha;
+		String path = "C:\\apache-tomcat-8.5.23\\webapps\\water\\WEB-INF\\upload\\" +patha;
 
             /*String pathb = "F:\\upload\\abc.jpg";*/
 		//witcher3!
 
-		String[] ary = patha.split("\\\\");
-		String fileName = ary[3];
-		System.out.println(fileName);
-		System.out.println(path);
+		String fileName = patha;
+
 
 
 		File file = new File(path);
@@ -164,12 +161,18 @@ public class Filedownload extends HttpServlet{
 		out.close();
 	}
 
-		public void doPost(HttpServletRequest request, HttpServletResponse response)
+
+		@RequestMapping(method = { RequestMethod.POST }, params = "action=exceptiondownloadpost")
+		public void doPostexception(HttpServletRequest request, HttpServletResponse response)
 				throws ServletException, IOException {
-			doGet(request, response);
+			doGetexception(request, response);
 		}
 
-
+	@RequestMapping(method = { RequestMethod.POST }, params = "action=filedownloadpost")
+	public void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doGet(request, response);
+	}
 	}
 
 

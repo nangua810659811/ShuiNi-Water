@@ -7,6 +7,7 @@ package com.bupt.qrj.unifyum.dal.dao.impl;
 import com.bupt.qrj.unifyum.dal.dao.searchDAO;
 
 import com.bupt.qrj.unifyum.dal.dataobject.searchDO;
+import com.bupt.qrj.unifyum.dal.dataobject.searchtestDO;
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
 import java.util.HashMap;
@@ -35,6 +36,13 @@ public class searchDAOImpl extends SqlMapClientDaoSupport implements searchDAO {
         abbs.put("timemax",timemax);
         List<searchDO> rets = this.getSqlMapClientTemplate().queryForList("search-mission",abbs);
        
+        return rets;
+    }
+
+    public List<searchtestDO> list_test() {
+
+        List<searchtestDO> rets = this.getSqlMapClientTemplate().queryForList("search-test");
+
         return rets;
     }
 
