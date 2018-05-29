@@ -94,11 +94,18 @@ public class MissionControllerImpl implements MissionController {
                         data1.put("event_name",EventInfoDO.getEvent_name());
                         data1.put("font_color",EventInfoDO.getFont_color());
                         data1.put("font_size",EventInfoDO.getFont_size());
+                        data1.put("workshop",EventInfoDO.getWorkshop());
+                        data1.put("check_point",EventInfoDO.getCheck_point());
 //                        data1.put("work",JSONObject.toJSONString(EventInfoDO.getAdditions()));
-                        data1.put("work",EventInfoDO.getAdditions());
+
+                        data1.put("work",JSONArray.parse(EventInfoDO.getAdditions()));
 //                        System.out.println(EventInfoDO.getAdditions());
                         eventData.add(data1);
                     }
+
+
+
+
 
                     ArrayList<JSONObject> noteData = new ArrayList<JSONObject>();
                     List<MissionReturnDO> noteInfo =MissionReturnDAO.Return_list("2","0");
@@ -1601,7 +1608,7 @@ public class MissionControllerImpl implements MissionController {
                 List<feedbackDO> feedback = feedbackDAO.seek(mission_id, event_id, work_name);
                 System.out.println(feedback);
                 if (feedback.isEmpty()) {
-                    if (type.equals("1")){
+                    if ("1".equals(type)){
                         feedbackDO fddata = new feedbackDO();
                         fddata.setMission_id(mission_id);
                         fddata.setWork_name(work_name);
@@ -1620,7 +1627,7 @@ public class MissionControllerImpl implements MissionController {
                         feedbackDAO.insertpic(fdpic);
                     }
                 } else {
-                    if (type.equals("1")){
+                    if ("1".equals(type)){
                         feedbackDO fddata = new feedbackDO();
                         fddata.setMission_id(mission_id);
                         fddata.setWork_name(work_name);
@@ -2094,7 +2101,7 @@ public class MissionControllerImpl implements MissionController {
                 insertExceptionDO.setReport_worker(report_worker);
                 insertExceptionDO.setReport_time(report_time);
                 insertExceptionDO.setWorkshop(workshop);
-                insertExceptionDO.setPic(pic);
+                insertExceptionDO.setPic(pic+".jpg");
                 insertExceptionDAO.insert(insertExceptionDO);
                 System.out.println("insert-ok\\\"1\\\"||\\\"2\\\"");
                 result.put("errMsg", "保存成功！");

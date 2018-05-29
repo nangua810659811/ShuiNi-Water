@@ -53,7 +53,7 @@ public class feedbackDAOImpl extends SqlMapClientDaoSupport implements
 	public void insertpic(feedbackDO feedbackDO) throws DataAccessException {
 
 
-		this.getSqlMapClientTemplate().insert("feedback-insert-data",
+		this.getSqlMapClientTemplate().insert("feedback-insert-pic",
 				feedbackDO);
 	}
 	public List<feedbackDO> seek(String mission_id,String event_id,String work_name) {

@@ -59,7 +59,24 @@ public class EventInfoDO {
 
 	private String event_name;
 
+	public String getWorkshop() {
+		return workshop;
+	}
 
+	public void setWorkshop(String workshop) {
+		this.workshop = workshop;
+	}
+
+	public String getCheck_point() {
+		return check_point;
+	}
+
+	public void setCheck_point(String check_point) {
+		this.check_point = check_point;
+	}
+
+	private String workshop;
+	private String check_point;
 
 	
 }

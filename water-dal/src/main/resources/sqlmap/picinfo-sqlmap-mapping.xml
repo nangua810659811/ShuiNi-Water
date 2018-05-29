@@ -12,16 +12,26 @@
 			jdbcType="int" nullValue="0"/>
 		<result property="pic" column="pic" javaType="java.lang.String"
 				jdbcType="VARCHAR" nullValue="0"/>
-
-
 	</resultMap>
-
+    <resultMap id="RM.expicinfo"
+               class="com.bupt.qrj.unifyum.dal.dataobject.picinfoexceptionDO">
+        <result property="id" column="id" javaType="java.lang.String"
+                jdbcType="int" nullValue="0"/>
+        <result property="pic" column="pic" javaType="java.lang.String"
+                jdbcType="VARCHAR" nullValue="0"/>
+    </resultMap>
 
 	<!--<insert id="pic-info-insert">-->
 		<!--insert into mission_pic-->
 		<!--(mission_id,pic,pic_class,time)-->
 		<!--values(#mission_id#,#pic#,#pic_class#,#time#);-->
 	<!--</insert>-->
+
+
+	<select id="find-pic-exception" parameterClass="com.bupt.qrj.unifyum.dal.dataobject.picinfoexceptionDO"
+			resultMap="RM.expicinfo">
+        select id,pic from exception where id = #id#;
+	</select>
 
 
 	<select id="find-pic" parameterClass="com.bupt.qrj.unifyum.dal.dataobject.picinfoDO"
@@ -33,7 +43,6 @@
 	<select id="find-pic-newest"
 			resultMap="RM.picinfo">
 		select mission_id,pic,pic_class,time from mission_pic order by id desc limit 1;
-
 	</select>
 
 </sqlMap>
