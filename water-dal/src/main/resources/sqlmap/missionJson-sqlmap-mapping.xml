@@ -2,26 +2,35 @@
 <!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
 <sqlMap namespace="unifyum">
 
-	<resultMap id="RM.missionJson"
-		class="com.bupt.qrj.unifyum.dal.dataobject.missionJsonDO">
+    <resultMap id="RM.missionJson"
+               class="com.bupt.qrj.unifyum.dal.dataobject.missionJsonDO">
 
-		<result property="mission_id" column="mission_id" javaType="java.lang.String"
-			jdbcType="int" nullValue="0"/>
-		<result property="event_id" column="event_id" javaType="java.lang.String"
-			jdbcType="int" nullValue="0"/>
-		<result property="big_json" column="big_json" javaType="java.lang.String"
-				jdbcType="VARCHAR" nullValue="0"/>
-
-
-	</resultMap>
+        <result property="mission_id" column="mission_id" javaType="java.lang.String"
+                jdbcType="int" nullValue="0"/>
+        <result property="event_id" column="event_id" javaType="java.lang.String"
+                jdbcType="int" nullValue="0"/>
+        <result property="big_json" column="big_json" javaType="java.lang.String"
+                jdbcType="VARCHAR" nullValue="0"/>
 
 
-	<insert id="mission-json">
+    </resultMap>
+
+
+    <insert id="mission-json">
         insert into mission_json
         (mission_id,event_id,big_json)
         values(#mission_id#,#event_id#,#big_json#);
-	</insert>
+    </insert>
 
 
+    <update id="mission-Time">
+        update mission set accept_time = #time#,start_time = #time# where
+        id = #mission_id#;
+    </update>
+
+    <update id="mission-Time1">
+        update mission set finish_time = #time# where
+        id = #mission_id#;
+    </update>
 
 </sqlMap>

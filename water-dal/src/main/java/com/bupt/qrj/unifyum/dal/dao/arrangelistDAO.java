@@ -6,6 +6,7 @@ package com.bupt.qrj.unifyum.dal.dao;
 import com.bupt.qrj.unifyum.dal.dataobject.arrangeListDO;
 import com.bupt.qrj.unifyum.dal.dataobject.arrangeseekDO;
 import com.bupt.qrj.unifyum.dal.dataobject.arrangeseekmisDO;
+import com.bupt.qrj.unifyum.dal.dataobject.arrangesetmisDO;
 
 import java.util.List;
 
@@ -18,5 +19,5 @@ public interface arrangelistDAO {
 
 
 	public List<arrangeListDO> listarrangeList(String date,String time);
-
+	public List<arrangesetmisDO> setmis();
 }

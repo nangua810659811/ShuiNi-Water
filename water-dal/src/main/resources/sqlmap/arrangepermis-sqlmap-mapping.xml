@@ -9,16 +9,17 @@
                 jdbcType="varchar" nullValue="0"/>
         <result property="mission_condition" column="mission_condition" javaType="java.lang.String"
                 jdbcType="varchar" nullValue="0"/>
-        <result property="mission" column="mission_name" javaType="java.lang.String"
+        <result property="mission_name" column="mission_name" javaType="java.lang.String"
                 jdbcType="varchar" nullValue="0"/>
 		<result property="worker_name" column="worker_name" javaType="java.lang.String"
 				jdbcType="varchar" nullValue="0"/>
-
+		<result property="mission_id" column="id" javaType="java.lang.String"
+				jdbcType="varchar" nullValue="0"/>
 
 	</resultMap>
 
 	<select id="arrange-per-mis" resultMap="RM.arrangepermis">
-		select period_start_time,mission_condition,mission_name,worker_name from mission where period_start_time &lt;= #timemax# and period_start_time &gt;= #timemin# and worker_name = #worker_name# and set_start_time_code = #set_start_time_code#;
+		select id,period_start_time,mission_condition,mission_name,worker_name from mission where period_start_time &lt;= #timemax# and period_start_time &gt;= #timemin# and worker_name = #worker_name# and set_start_time_code = #set_start_time_code#;
 	</select>
 
     <!--mission_condition = '1' and-->

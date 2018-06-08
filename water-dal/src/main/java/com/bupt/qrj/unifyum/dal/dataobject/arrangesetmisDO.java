@@ -8,45 +8,37 @@ package com.bupt.qrj.unifyum.dal.dataobject;
  *         unifyum-dal 用途: - 用户账户基本信息
  *
  */
-public class checkInfoDO {
+public class arrangesetmisDO {
 
 
-	public String getFinish_time() {
-		return finish_time;
+	public String getSet_id() {
+		return set_id;
 	}
 
-	public void setFinish_time(String finish_time) {
-		this.finish_time = finish_time;
+	public void setSet_id(String set_id) {
+		this.set_id = set_id;
 	}
 
-	public String getMission_id() {
-		return mission_id;
+	public String getMission() {
+		return mission;
 	}
 
-	public void setMission_id(String mission_id) {
-		this.mission_id = mission_id;
+	public void setMission(String mission) {
+		this.mission = mission;
 	}
 
-	public String getMission_condition() {
-		return mission_condition;
+	public String getMission_type() {
+		return mission_type;
 	}
 
-	public void setMission_condition(String mission_condition) {
-		this.mission_condition = mission_condition;
+	public void setMission_type(String mission_type) {
+		this.mission_type = mission_type;
 	}
 
-	public String getWorker_name() {
-		return worker_name;
-	}
+	private String set_id;
+	private String mission;
+	private String mission_type;
 
-	public void setWorker_name(String worker_name) {
-		this.worker_name = worker_name;
-	}
-
-	private String finish_time;
-	private String mission_id;
-	private String mission_condition;
-	private String worker_name;
 
 
 

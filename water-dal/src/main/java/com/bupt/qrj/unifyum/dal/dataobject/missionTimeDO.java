@@ -8,7 +8,7 @@ package com.bupt.qrj.unifyum.dal.dataobject;
  *
  *
  */
-public class missionJsonDO {
+public class missionTimeDO {
 
 
     public String getMission_id() {
@@ -19,25 +19,25 @@ public class missionJsonDO {
         this.mission_id = mission_id;
     }
 
-    public String getEvent_id() {
-        return event_id;
+    public String getTime() {
+        return time;
     }
 
-    public void setEvent_id(String event_id) {
-        this.event_id = event_id;
+    public void setTime(String time) {
+        this.time = time;
     }
 
-    public String getBig_json() {
-        return big_json;
+    public String getType() {
+        return type;
     }
 
-    public void setBig_json(String big_json) {
-        this.big_json = big_json;
+    public void setType(String type) {
+        this.type = type;
     }
 
     private String mission_id;
-    private String event_id;
-    private String big_json;
+    private String time;
+    private String type;
 
 
 

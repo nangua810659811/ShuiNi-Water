@@ -28,6 +28,47 @@ public class setMissionDAOImpl extends SqlMapClientDaoSupport implements
 			.getLogger(setMissionDAOImpl.class);
 
 
+    public String get0(String mission_id, String column_key) throws DataAccessException {
+
+        if (mission_id == null || column_key== null)
+            return null;
+        HashMap<String,Object> abc = new HashMap<String, Object>();
+        abc.put("column_key",column_key);
+        abc.put("mission_id",mission_id);
+
+        String rets = (String) this.getSqlMapClientTemplate()
+                .queryForObject("Mission-Value-setmis", abc);
+
+        return rets;
+    }
+
+    public void update(setMissionDO setMissionDO) throws DataAccessException {
+        if (setMissionDO == null) {
+            throw new IllegalArgumentException(
+                    "Can't insert a null data(mobilelbsMerchantSubcategoryDO) object into db.");
+        }
+
+
+        this.getSqlMapClientTemplate().update("setMission-Return-UPDATE",
+                setMissionDO);
+
+    }
+
+    public List<String> list0(String mission_id) {
+
+        LOGGER.debug("do the user list start");
+
+        List<String> rets = this.getSqlMapClientTemplate().queryForList(
+                "set-Return-Key",mission_id);
+        LOGGER.debug("do the TestData user list over");
+        if (rets == null || rets.size() == 0) {
+            LOGGER.debug("do the user list return null");
+            return null;
+        }
+        System.out.println(rets);
+        return rets;
+    }
+
 
 	public List<setMissionDO> List(String type) {
 

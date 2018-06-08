@@ -27,12 +27,12 @@ public class arrangeListDO {
         this.work_type = work_type;
     }
 
-    public String getSet_time() {
-        return set_time;
+    public String getType() {
+        return type;
     }
 
-    public void setSet_time(String set_time) {
-        this.set_time = set_time;
+    public void setType(String type) {
+        this.type = type;
     }
 
     private String worker_name;
@@ -40,7 +40,7 @@ public class arrangeListDO {
 
     private String work_type;
 
-    private String set_time;
+    private String type;
 
 
 

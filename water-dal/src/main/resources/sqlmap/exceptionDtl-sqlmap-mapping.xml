@@ -26,7 +26,7 @@
 	</resultMap>
 
 	<select id="select-exception-dtl" resultMap="RM.exceptionDtl">
-		select id,workshop,event,checkpoint,level,description,report_worker,report_time,status from exception where status = #status# and report_time between #ymmin# and #ymmax#;
+		select id,workshop,event,checkpoint,level,description,report_worker,report_time,status from exception where level = #status# and report_time between #ymmin# and #ymmax#;
 	</select>
 
 

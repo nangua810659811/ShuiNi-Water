@@ -53,6 +53,20 @@
 
 
     </resultMap>
+
+	<select id="set-Return-Key" resultClass="java.lang.String">
+        select value from set_mission_return
+        where value is not null;
+	</select>
+
+    <select id="Mission-Value-setmis" parameterClass="map" resultClass="java.lang.String" remapResults="true" >
+        select $column_key$ from set_mission where set_id = #mission_id#;
+    </select>
+
+    <update id="setMission-Return-UPDATE">
+        update set_mission_return set content=#content# where value=#value#;
+    </update>
+
 	<select id="Set_Mission-List" resultMap="RM.Set_Mission">
 		select name,content,font_color,font_size,array,type from set_mission_return where type = #type#;
 	</select>

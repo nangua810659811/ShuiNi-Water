@@ -17,9 +17,9 @@
 				jdbcType="VARCHAR" />
         <result property="authen_method" column="authen_method" javaType="java.lang.String"
                 jdbcType="VARCHAR" />
-		<result property="task_addition" column="task_addition" javaType="java.lang.String"
+		<result property="task_addition" column="detail_info" javaType="java.lang.String"
 				jdbcType="VARCHAR" />
-		<result property="detail_info" column="detail_info" javaType="java.lang.String"
+		<result property="detail_info" column="event" javaType="java.lang.String"
 				jdbcType="VARCHAR" />
 	</resultMap>
 
@@ -31,7 +31,12 @@
 	</insert>
 
 	<select id="select-arrfeedback" resultMap="RM.arrfeedback">
-		select mission_description,mission,cover_fields,mission_level,mission_source,authen_method,task_addition,detail_info from set_mission where mission =#mission# order by set_id desc limit 1;
+		select mission_description,mission,cover_fields,mission_level,mission_source,authen_method,detail_info,event from set_mission where mission =#mission# order by set_id desc limit 1;
 	</select>
+
+	<delete id="set-mission-DELETE">
+		delete from set_mission where set_id =
+		#set_id#
+	</delete>
 
 </sqlMap>

@@ -8,6 +8,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.bupt.qrj.unifyum.api.controller.MissionController;
 import com.bupt.qrj.unifyum.dal.dao.impl.*;
 import com.bupt.qrj.unifyum.dal.dataobject.*;
+import com.bupt.qrj.unifyum.util.SendMessage;
 import com.bupt.qrj.unifyum.util.http.HttpOutUtil;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
@@ -93,7 +94,7 @@ public class MissionControllerImpl implements MissionController {
                         data1.put("event_ID",EventInfoDO.getEvent_id());
                         data1.put("event_name",EventInfoDO.getEvent_name());
                         data1.put("font_color",EventInfoDO.getFont_color());
-                        data1.put("font_size",EventInfoDO.getFont_size());
+                        data1.put("font_size",Integer.valueOf(EventInfoDO.getFont_size()));
                         data1.put("workshop",EventInfoDO.getWorkshop());
                         data1.put("check_point",EventInfoDO.getCheck_point());
 //                        data1.put("work",JSONObject.toJSONString(EventInfoDO.getAdditions()));
@@ -293,11 +294,22 @@ public class MissionControllerImpl implements MissionController {
 
         try {
 
-            String taskcreate = request.getParameter("taskcreate");
+            String id = request.getParameter("taskname");
 
-            if (taskcreate==null||taskcreate.isEmpty()) {
+            if (id==null||id.isEmpty()) {
                 result.put("errMsg","输入参数有误");
             } else {
+                List<String> missionReturn = setMissionDAO.list0(id);
+
+                for(String mr : missionReturn){
+
+                    String temp =  setMissionDAO.get0(id,mr);
+                    setMissionDO setMissionDO = new setMissionDO();
+                    setMissionDO.setValue(mr);
+                    setMissionDO.setContent(temp);
+                    setMissionDAO.update(setMissionDO);
+                }
+
                 //formatinspection
                 //addedittext
                 String type = "1";
@@ -310,7 +322,7 @@ public class MissionControllerImpl implements MissionController {
                     for(setMissionDO ie : inedit){
                         JSONObject data1 = new JSONObject();
                         data1.put("edittext_name",ie.getName());
-                        data1.put("edittext_content","");
+                        data1.put("edittext_content",ie.getContent());
                         data1.put("font_color",ie.getFont_color());
                         data1.put("font_size",ie.getFont_size());
                         formatinspectionedit.add(data1);
@@ -324,7 +336,7 @@ public class MissionControllerImpl implements MissionController {
                     for(setMissionDO is : inspinner){
                         JSONObject data2 = new JSONObject();
                         data2.put("spinner_name",is.getName());
-                        data2.put("spinner_content","无");
+                        data2.put("spinner_content",is.getContent());
                         data2.put("spinner_array",is.getArray());
                         data2.put("font_color",is.getFont_color());
                         data2.put("font_size",is.getFont_size());
@@ -351,6 +363,8 @@ public class MissionControllerImpl implements MissionController {
                     JSONObject databutton0 = new JSONObject();
                     databutton0.put("button_name","工具列表");
                     databutton0.put("button_content","选择工具");
+                    databutton0.put("needtextview","true");
+                    databutton0.put("needshownum","false");
                     databutton0.put("content",formatinspectionbuttoncontent1);
                     databutton0.put("font_color",inbutton0.getFont_color());
                     databutton0.put("font_size",inbutton0.getFont_size());
@@ -372,6 +386,8 @@ public class MissionControllerImpl implements MissionController {
                     JSONObject databutton1 = new JSONObject();
                     databutton1.put("button_name","配件列表");
                     databutton1.put("button_content","选择配件");
+                    databutton1.put("needtextview","true");
+                    databutton1.put("needshownum","true");
                     databutton1.put("content",formatinspectionbuttoncontent2);
                     databutton1.put("font_color",inbutton1.getFont_color());
                     databutton1.put("font_size",inbutton1.getFont_size());
@@ -383,6 +399,7 @@ public class MissionControllerImpl implements MissionController {
                         JSONObject data4 = new JSONObject();
                         data4.put("content_name",ib2.getEvent_name());
                         data4.put("content_note",ib2.getAdditions());
+                        data4.put("content_id",ib2.getEvent_id());
                         data4.put("content_isselect","false");
                         formatinspectionbuttoncontent3.add(data4);
                     }
@@ -393,6 +410,8 @@ public class MissionControllerImpl implements MissionController {
                     JSONObject databutton2 = new JSONObject();
                     databutton2.put("button_name","任务事件");
                     databutton2.put("button_content","选择事件");
+                    databutton2.put("needtextview","false");
+                    databutton2.put("needshownum","false");
                     databutton2.put("content",formatinspectionbuttoncontent3);
                     databutton2.put("font_color",inbutton2.getFont_color());
                     databutton2.put("font_size",inbutton2.getFont_size());
@@ -415,133 +434,133 @@ public class MissionControllerImpl implements MissionController {
                     formatinspection.put("addcheck",inspectioncheck);
                     System.out.println(type);
 
-
-                    //formatrepair
-                    type = "4";
-                    JSONObject formatrepair = new JSONObject();
-                    List<setMissionDO> reedit = setMissionDAO.List(type);
-                    ArrayList<JSONObject> formatrepairedit = new ArrayList<JSONObject>();
-                    System.out.println(type);
-                    for(setMissionDO ie : reedit){
-                        JSONObject data9 = new JSONObject();
-                        data9.put("edittext_name",ie.getName());
-                        data9.put("edittext_content","");
-                        data9.put("font_color",ie.getFont_color());
-                        data9.put("font_size",ie.getFont_size());
-                        formatrepairedit.add(data9);
-                    }
-                    formatrepair.put("addedittext",formatrepairedit);
-                    //addspinner
-                    System.out.println(type);
-                    type = "5";
-                    List<setMissionDO> respinner = setMissionDAO.List(type);
-                    ArrayList<JSONObject> formatrepairspinner = new ArrayList<JSONObject>();
-                    for(setMissionDO rs : respinner){
-                        JSONObject data8 = new JSONObject();
-                        data8.put("spinner_name",rs.getName());
-                        data8.put("spinner_content","无");
-                        data8.put("spinner_array",rs.getArray());
-                        data8.put("font_color",rs.getFont_color());
-                        data8.put("font_size",rs.getFont_size());
-                        formatrepairspinner.add(data8);
-                    }
-                    formatinspection.put("addspinner",formatrepairspinner);
-                    //addbutton
-                    ArrayList<JSONObject> formatrepairbutton= new ArrayList<JSONObject>();
-                    System.out.println(type);
-                    type = "2";
-
-                    List<materialDO> rebutton00 = setMissionDAO.list1(type);
-                    ArrayList<JSONObject> formatrepairbuttoncontent1 = new ArrayList<JSONObject>();
-                    for(materialDO rb1 : rebutton00){
-                        JSONObject data3 = new JSONObject();
-                        data3.put("content_name",rb1.getName());
-                        data3.put("content_isselect","false");
-                        formatrepairbuttoncontent1.add(data3);
-                    }
-                    System.out.println(type);
-                    type = "8";
-                    array = "1";
-                    setMissionDO rebutton0 = setMissionDAO.get(type,array);
-                    JSONObject databutton9 = new JSONObject();
-                    databutton9.put("button_name","工具列表");
-                    databutton9.put("button_content","选择工具");
-                    databutton9.put("content",formatrepairbuttoncontent1);
-                    databutton9.put("font_color",rebutton0.getFont_color());
-                    databutton9.put("font_size",rebutton0.getFont_size());
-                    formatrepairbutton.add(databutton9);
-                    System.out.println(type);
-                    type = "1";
-                    List<materialDO> rebutton11 = setMissionDAO.list1(type);
-                    ArrayList<JSONObject> formatrepairbuttoncontent2 = new ArrayList<JSONObject>();
-                    for(materialDO rb1 : rebutton11){
-                        JSONObject data7 = new JSONObject();
-                        data7.put("content_name",rb1.getName());
-                        data7.put("content_isselect","0");
-                        formatrepairbuttoncontent2.add(data7);
-                    }
-                    System.out.println(type);
-                    type = "8";
-                    array = "2";
-                    setMissionDO rebutton1 = setMissionDAO.get(type,array);
-                    JSONObject databutton6 = new JSONObject();
-                    databutton6.put("button_name","配件列表");
-                    databutton6.put("button_content","选择配件");
-                    databutton6.put("content",formatrepairbuttoncontent2);
-                    databutton6.put("font_color",rebutton1.getFont_color());
-                    databutton6.put("font_size",rebutton1.getFont_size());
-                    formatrepairbutton.add(databutton6);
+//
+//                    //formatrepair
+//                    type = "4";
+//                    JSONObject formatrepair = new JSONObject();
+//                    List<setMissionDO> reedit = setMissionDAO.List(type);
+//                    ArrayList<JSONObject> formatrepairedit = new ArrayList<JSONObject>();
 //                    System.out.println(type);
-                    List<EventInfoDO> rebutton22 = setMissionDAO.Event_list();
-                    ArrayList<JSONObject> formatrepairbuttoncontent3 = new ArrayList<JSONObject>();
-                    for(EventInfoDO ib2 : rebutton22){
-                        JSONObject data4 = new JSONObject();
-                        data4.put("content_name",ib2.getEvent_name());
-                        data4.put("content_note",ib2.getAdditions());
-                        data4.put("content_isselect","false");
-                        formatrepairbuttoncontent3.add(data4);
-                    }
-                    System.out.println(type);
-                    type = "8";
-                    array = "3";
-                    setMissionDO rebutton2 = setMissionDAO.get(type,array);
-                    JSONObject databutton8 = new JSONObject();
-                    databutton8.put("button_name","任务事件");
-                    databutton8.put("button_content","选择事件");
-                    databutton8.put("content",formatrepairbuttoncontent3);
-                    databutton8.put("font_color",rebutton2.getFont_color());
-                    databutton8.put("font_size",rebutton2.getFont_size());
-                    formatrepairbutton.add(databutton8);
+//                    for(setMissionDO ie : reedit){
+//                        JSONObject data9 = new JSONObject();
+//                        data9.put("edittext_name",ie.getName());
+//                        data9.put("edittext_content",ie.getContent());
+//                        data9.put("font_color",ie.getFont_color());
+//                        data9.put("font_size",ie.getFont_size());
+//                        formatrepairedit.add(data9);
+//                    }
+//                    formatrepair.put("addedittext",formatrepairedit);
+//                    //addspinner
 //                    System.out.println(type);
-                    formatrepair.put("addbutton",formatrepairbutton);
-
-
-                    ArrayList<JSONObject> repaircheck= new ArrayList<JSONObject>();
-                    type = "6";
-                    List<setMissionDO> recheck = setMissionDAO.List(type);
-                    for(setMissionDO rc : recheck){
-                        JSONObject data5 = new JSONObject();
-                        data5.put("content_name",rc.getName());
-                        data5.put("content_isselect","false");
-                        data5.put("font_color",rc.getFont_color());
-                        data5.put("font_size",rc.getFont_size());
-                        repaircheck.add(data5);
-                    }
-                    formatrepair.put("addcheck",repaircheck);
-                    System.out.println(type);
-                    ArrayList<JSONObject> tasklist = new ArrayList<JSONObject>();
-                    List<setMissioninfoDO> missioninfo =setMissionDAO.Mission_list();
-                    for(setMissioninfoDO mi : missioninfo){
-                        JSONObject data10 = new JSONObject();
-                        data10.put("task_name",mi.getMission());
-                        data10.put("task_num",mi.getMission_id());
-                        tasklist.add(data10);
-                    }
+//                    type = "5";
+//                    List<setMissionDO> respinner = setMissionDAO.List(type);
+//                    ArrayList<JSONObject> formatrepairspinner = new ArrayList<JSONObject>();
+//                    for(setMissionDO rs : respinner){
+//                        JSONObject data8 = new JSONObject();
+//                        data8.put("spinner_name",rs.getName());
+//                        data8.put("spinner_content",rs.getContent());
+//                        data8.put("spinner_array",rs.getArray());
+//                        data8.put("font_color",rs.getFont_color());
+//                        data8.put("font_size",rs.getFont_size());
+//                        formatrepairspinner.add(data8);
+//                    }
+//                    formatinspection.put("addspinner",formatrepairspinner);
+//                    //addbutton
+//                    ArrayList<JSONObject> formatrepairbutton= new ArrayList<JSONObject>();
+//                    System.out.println(type);
+//                    type = "2";
+//
+//                    List<materialDO> rebutton00 = setMissionDAO.list1(type);
+//                    ArrayList<JSONObject> formatrepairbuttoncontent1 = new ArrayList<JSONObject>();
+//                    for(materialDO rb1 : rebutton00){
+//                        JSONObject data3 = new JSONObject();
+//                        data3.put("content_name",rb1.getName());
+//                        data3.put("content_isselect","false");
+//                        formatrepairbuttoncontent1.add(data3);
+//                    }
+//                    System.out.println(type);
+//                    type = "8";
+//                    array = "1";
+//                    setMissionDO rebutton0 = setMissionDAO.get(type,array);
+//                    JSONObject databutton9 = new JSONObject();
+//                    databutton9.put("button_name","工具列表");
+//                    databutton9.put("button_content","选择工具");
+//                    databutton9.put("content",formatrepairbuttoncontent1);
+//                    databutton9.put("font_color",rebutton0.getFont_color());
+//                    databutton9.put("font_size",rebutton0.getFont_size());
+//                    formatrepairbutton.add(databutton9);
+//                    System.out.println(type);
+//                    type = "1";
+//                    List<materialDO> rebutton11 = setMissionDAO.list1(type);
+//                    ArrayList<JSONObject> formatrepairbuttoncontent2 = new ArrayList<JSONObject>();
+//                    for(materialDO rb1 : rebutton11){
+//                        JSONObject data7 = new JSONObject();
+//                        data7.put("content_name",rb1.getName());
+//                        data7.put("content_isselect","0");
+//                        formatrepairbuttoncontent2.add(data7);
+//                    }
+//                    System.out.println(type);
+//                    type = "8";
+//                    array = "2";
+//                    setMissionDO rebutton1 = setMissionDAO.get(type,array);
+//                    JSONObject databutton6 = new JSONObject();
+//                    databutton6.put("button_name","配件列表");
+//                    databutton6.put("button_content","选择配件");
+//                    databutton6.put("content",formatrepairbuttoncontent2);
+//                    databutton6.put("font_color",rebutton1.getFont_color());
+//                    databutton6.put("font_size",rebutton1.getFont_size());
+//                    formatrepairbutton.add(databutton6);
+////                    System.out.println(type);
+//                    List<EventInfoDO> rebutton22 = setMissionDAO.Event_list();
+//                    ArrayList<JSONObject> formatrepairbuttoncontent3 = new ArrayList<JSONObject>();
+//                    for(EventInfoDO ib2 : rebutton22){
+//                        JSONObject data4 = new JSONObject();
+//                        data4.put("content_name",ib2.getEvent_name());
+//                        data4.put("content_note",ib2.getAdditions());
+//                        data4.put("content_isselect","false");
+//                        formatrepairbuttoncontent3.add(data4);
+//                    }
+//                    System.out.println(type);
+//                    type = "8";
+//                    array = "3";
+//                    setMissionDO rebutton2 = setMissionDAO.get(type,array);
+//                    JSONObject databutton8 = new JSONObject();
+//                    databutton8.put("button_name","任务事件");
+//                    databutton8.put("button_content","选择事件");
+//                    databutton8.put("content",formatrepairbuttoncontent3);
+//                    databutton8.put("font_color",rebutton2.getFont_color());
+//                    databutton8.put("font_size",rebutton2.getFont_size());
+//                    formatrepairbutton.add(databutton8);
+////                    System.out.println(type);
+//                    formatrepair.put("addbutton",formatrepairbutton);
+//
+//
+//                    ArrayList<JSONObject> repaircheck= new ArrayList<JSONObject>();
+//                    type = "6";
+//                    List<setMissionDO> recheck = setMissionDAO.List(type);
+//                    for(setMissionDO rc : recheck){
+//                        JSONObject data5 = new JSONObject();
+//                        data5.put("content_name",rc.getName());
+//                        data5.put("content_isselect","false");
+//                        data5.put("font_color",rc.getFont_color());
+//                        data5.put("font_size",rc.getFont_size());
+//                        repaircheck.add(data5);
+//                    }
+//                    formatrepair.put("addcheck",repaircheck);
+//                    System.out.println(type);
+//                    ArrayList<JSONObject> tasklist = new ArrayList<JSONObject>();
+//                    List<setMissioninfoDO> missioninfo =setMissionDAO.Mission_list();
+//                    for(setMissioninfoDO mi : missioninfo){
+//                        JSONObject data10 = new JSONObject();
+//                        data10.put("task_name",mi.getMission());
+//                        data10.put("task_num",mi.getMission_id());
+//                        tasklist.add(data10);
+//                    }
                     JSONObject data = new JSONObject();
-                    data.put("tasklist",tasklist);
-                    data.put("tasknature","巡检任务;维修任务");
-                    data.put("formatinspection",formatinspection);
-                    data.put("formatrepair",formatrepair);
+//                    data.put("tasklist",tasklist);
+//                    data.put("tasknature","巡检任务;维修任务");
+                    data.put("format",formatinspection);
+//                    data.put("formatrepair",formatrepair);
 //                    System.out.println(type);
                     result.put("data",data);
                     result.put("essMsg","10000");
@@ -573,20 +592,9 @@ public class MissionControllerImpl implements MissionController {
 
 		try {
 
-			//String body = request.getParameter("login");
-			//System.out.println("login=" + body);
-
-			/*
-			 * Map map = JSON.parseObject(body, Map.class);
-			 * System.out.println(map.get("mobileNo")); String userName =
-			 * (String) map.get("mobileNo"); String password = (String)
-			 * map.get("password");
-			 */
-
-			//从dbinfo.properties文件中读取配置信息
-
 			String phone = request.getParameter("phone");
 			String password = request.getParameter("password");
+            String code = request.getParameter("code");
 
             //System.out.println(phone);
             //System.out.println(password);
@@ -601,35 +609,66 @@ public class MissionControllerImpl implements MissionController {
                     workerloginDO.setPhone(phone);
 
                     workerLoginDO user = workerloginDAO.get(workerloginDO);
-                /*System.out.println(user);*/
 
                     if (user == null) {
                         result.put("errMsg", "用户名输入错误");
                         result.put("result","10002");
                     } else {
                         // 检查用户密码是否正确
-                        if (password.equals(user.getPassword())) {
+                        if (password.equals(user.getPassword())&&code.equals(user.getRandom())) {
                             result.put("result","10000");
                             result.put("errMsg", "登录成功");
 
-						/*
-						 * result.setAuthToken(authToken);
-						 * result.setLoginTime(loginTime);
-						 */
                         } else {
-                            result.put("errMsg", "密码错误");
+                            result.put("errMsg", "密码或验证码错误");
                             result.put("result","10003");
                         }
                     }
-
 			}
 		} catch (Exception e) {
 			result.put("essMsg", e.getMessage());
-
 		}
-		// 输出结果
 		HttpOutUtil.outData(response, JSONObject.toJSONString(result));
 	}
+
+
+
+/*
+* send Message
+* */
+    @RequestMapping(method = { RequestMethod.POST }, params = "action=sendMessage")
+    public void sendMessage(HttpServletRequest request, HttpServletResponse response) {
+
+        workerloginDAOImpl workerloginDAO = (workerloginDAOImpl) context.getBean("workerloginDAO");
+
+        JSONObject result = new JSONObject();
+        result.put("result", "10001");
+
+        try {
+
+            String phone = request.getParameter("phone");
+
+            // 先是参数检查
+            String random = Integer.toString((int)((Math.random()*9+1)*1000));
+
+            if (phone == null || phone.isEmpty()) {
+                result.put("errMsg", "输入参数有误");
+                result.put("result","10004");
+            } else {
+                workerLoginDO workerloginDO = new workerLoginDO();
+                workerloginDO.setPhone(phone);
+                workerloginDO.setRandom(random);
+                workerloginDAO.update(workerloginDO);
+
+                SendMessage.sendMessage(phone, "您的随机验证码为：" + random);
+                result.put("errMsg", "chenggong");
+                result.put("result", "10000");
+            }
+        } catch (Exception e) {
+            result.put("essMsg", e.getMessage());
+        }
+        HttpOutUtil.outData(response, JSONObject.toJSONString(result));
+    }
 
 
     /*
@@ -713,6 +752,7 @@ public class MissionControllerImpl implements MissionController {
             String longitude = request.getParameter("longitude");
             String latitude = request.getParameter("latitude");
             String time = request.getParameter("time");
+            String mission_id = request.getParameter("mission_id");
 
 
             if (worker_phone == null || worker_phone.isEmpty() ||longitude == null || longitude.isEmpty() ||latitude == null || latitude.isEmpty()
@@ -736,6 +776,7 @@ public class MissionControllerImpl implements MissionController {
                 li.setId(id.getId());
                 li.setLatitude(latitude);
                 li.setLongitude(longitude);
+                li.setMission_id(mission_id);
                 locationDAO.insert(li);
                     //have,update
                     locationDO locationDO = new locationDO();
@@ -1386,17 +1427,13 @@ public class MissionControllerImpl implements MissionController {
     @RequestMapping(method = { RequestMethod.POST }, params = "action=createformat")
     public void createformat(HttpServletRequest request, HttpServletResponse response) {
 
-        //ApplicationContext context = getContext();
-//        searchDAOImpl searchDAO = (searchDAOImpl) context.getBean("searchDAO");
+
+        setMissionDAOImpl setMissionDAO=(setMissionDAOImpl) context.getBean("setMissionDAO");
 
         JSONObject result = new JSONObject();
         result.put("result", "10001");
         JSONObject data = new JSONObject();
         try {
-
-
-
-
 
             result.put("result", "10000");
             result.put("errMsg", "成功");
@@ -1453,118 +1490,82 @@ public class MissionControllerImpl implements MissionController {
             addspinner.add(a3);
             format.put("addspinner",addspinner);
 
-            JSONArray addbutton = new JSONArray();
-            JSONObject b1 = new JSONObject();
-            b1.put("button_name","工具列表");
-            b1.put("button_content","选择工具");
-            b1.put("needtextview","true");
-            b1.put("needshownum","false");
-            b1.put("font_color","#080808");
-            b1.put("font_size",20);
-            JSONArray content = new JSONArray();
-            JSONObject c1 = new JSONObject();
-            c1.put("content_name","工具1");
-            c1.put("content_isselect","false");
-            content.add(c1);
-            JSONObject c2 = new JSONObject();
-            c2.put("content_name","工具2");
-            c2.put("content_isselect","false");
-            content.add(c2);
-            JSONObject c3 = new JSONObject();
-            c3.put("content_name","工具3");
-            c3.put("content_isselect","false");
-            content.add(c3);
-            JSONObject c4 = new JSONObject();
-            c4.put("content_name","工具4");
-            c4.put("content_isselect","false");
-            content.add(c4);
-            JSONObject c5 = new JSONObject();
-            c5.put("content_name","工具5");
-            c5.put("content_isselect","false");
-            content.add(c5);
-            JSONObject c6 = new JSONObject();
-            c6.put("content_name","工具6");
-            c6.put("content_isselect","false");
-            content.add(c6);
-            b1.put("content",content);
-            addbutton.add(b1);
+            ArrayList<JSONObject> formatinspectionbutton= new ArrayList<JSONObject>();
 
-            JSONObject b2 = new JSONObject();
-            b2.put("button_name","配件列表");
-            b2.put("button_content","选择配件");
-            b2.put("needtextview","true");
-            b2.put("needshownum","true");
-            b2.put("font_color","#080808");
-            b2.put("font_size",20);
-            JSONArray content1 = new JSONArray();
-            JSONObject c11 = new JSONObject();
-            c11.put("content_name","配件1");
-            c11.put("content_isselect",10);
-            content1.add(c11);
-            JSONObject c21 = new JSONObject();
-            c21.put("content_name","配件2");
-            c21.put("content_isselect",5);
-            content1.add(c21);
-            JSONObject c31 = new JSONObject();
-            c31.put("content_name","配件3");
-            c31.put("content_isselect",5);
-            content1.add(c31);
-            JSONObject c41 = new JSONObject();
-            c41.put("content_name","配件4");
-            c41.put("content_isselect",5);
-            content1.add(c41);
-            JSONObject c51 = new JSONObject();
-            c51.put("content_name","配件5");
-            c51.put("content_isselect",5);
-            content1.add(c51);
-            JSONObject c61 = new JSONObject();
-            c61.put("content_name","配件6");
-            c61.put("content_isselect",10);
-            content1.add(c61);
-            b2.put("content",content1);
-            addbutton.add(b2);
+            String type = "2";
 
-            JSONObject b21 = new JSONObject();
-            b21.put("button_name","任务事件");
-            b21.put("button_content","选择事件");
-            b21.put("needtextview","false");
-            b21.put("needshownum","false");
-            b21.put("font_color","#080808");
-            b21.put("font_size",20);
-            JSONArray content11 = new JSONArray();
-            JSONObject c111 = new JSONObject();
-            c111.put("content_name","事件1");
-            c111.put("content_note","温度;仪表");
-            c111.put("content_isselect","false");
-            content11.add(c111);
-            JSONObject c211 = new JSONObject();
-            c211.put("content_name","事件2");
-            c211.put("content_note","温度;仪表");
-            c211.put("content_isselect","false");
-            content11.add(c211);
-            JSONObject c311 = new JSONObject();
-            c311.put("content_name","事件3");
-            c311.put("content_note","温度;仪表");
-            c311.put("content_isselect","false");
-            content11.add(c311);
-            JSONObject c411 = new JSONObject();
-            c411.put("content_name","事件4");
-            c411.put("content_note","温度;仪表");
-            c411.put("content_isselect","false");
-            content11.add(c411);
-            JSONObject c511 = new JSONObject();
-            c511.put("content_name","事件5");
-            c511.put("content_note","温度;仪表");
-            c511.put("content_isselect","false");
-            content11.add(c511);
-            JSONObject c611 = new JSONObject();
-            c611.put("content_name","事件6");
-            c611.put("content_note","温度;仪表");
-            c611.put("content_isselect","false");
-            content11.add(c611);
-            b21.put("content",content11);
-            addbutton.add(b21);
-            format.put("addbutton",addbutton);
+            List<materialDO> inbutton00 = setMissionDAO.list1(type);
+            ArrayList<JSONObject> formatinspectionbuttoncontent1 = new ArrayList<JSONObject>();
+            for(materialDO ib1 : inbutton00){
+                JSONObject data3 = new JSONObject();
+                data3.put("content_name",ib1.getName());
+                data3.put("content_isselect","false");
+                formatinspectionbuttoncontent1.add(data3);
+            }
+              type = "7";
+            String array = "1";
+            setMissionDO inbutton0 = setMissionDAO.get(type,array);
+            JSONObject databutton0 = new JSONObject();
+            databutton0.put("button_name","工具列表");
+            databutton0.put("button_content","选择工具");
+            databutton0.put("needtextview","true");
+            databutton0.put("needshownum","false");
+            databutton0.put("content",formatinspectionbuttoncontent1);
+            databutton0.put("font_color",inbutton0.getFont_color());
+            databutton0.put("font_size",inbutton0.getFont_size());
+            formatinspectionbutton.add(databutton0);
+            System.out.println(type);
+            type = "1";
+            List<materialDO> inbutton11 = setMissionDAO.list1(type);
+            ArrayList<JSONObject> formatinspectionbuttoncontent2 = new ArrayList<JSONObject>();
+            for(materialDO ib1 : inbutton11){
+                JSONObject data3 = new JSONObject();
+                data3.put("content_name",ib1.getName());
+                data3.put("content_isselect","0");
+                formatinspectionbuttoncontent2.add(data3);
+            }
+            System.out.println(type);
+            type = "7";
+            array = "2";
+            setMissionDO inbutton1 = setMissionDAO.get(type,array);
+            JSONObject databutton1 = new JSONObject();
+            databutton1.put("button_name","配件列表");
+            databutton1.put("button_content","选择配件");
+            databutton1.put("needtextview","true");
+            databutton1.put("needshownum","true");
+            databutton1.put("content",formatinspectionbuttoncontent2);
+            databutton1.put("font_color",inbutton1.getFont_color());
+            databutton1.put("font_size",inbutton1.getFont_size());
+            formatinspectionbutton.add(databutton1);
+            System.out.println(type);
+            List<EventInfoDO> inbutton22 = setMissionDAO.Event_list();
+            ArrayList<JSONObject> formatinspectionbuttoncontent3 = new ArrayList<JSONObject>();
+            for(EventInfoDO ib2 : inbutton22){
+                JSONObject data4 = new JSONObject();
+                data4.put("content_name",ib2.getEvent_name());
+//                data4.put("content_note",ib2.getAdditions());
+                data4.put("content_isselect","false");
+                formatinspectionbuttoncontent3.add(data4);
+            }
+            System.out.println(type);
+            type = "7";
+            array = "3";
+            setMissionDO inbutton2 = setMissionDAO.get(type,array);
+            JSONObject databutton2 = new JSONObject();
+            databutton2.put("button_name","任务事件");
+            databutton2.put("button_content","选择事件");
+            databutton2.put("needtextview","false");
+            databutton2.put("needshownum","false");
+            databutton2.put("content",formatinspectionbuttoncontent3);
+            databutton2.put("font_color",inbutton2.getFont_color());
+            databutton2.put("font_size",inbutton2.getFont_size());
+            formatinspectionbutton.add(databutton2);
+            System.out.println(type);
+
+
+
+
+            format.put("addbutton",formatinspectionbutton);
             data.put("format", format);
 
 
@@ -1818,7 +1819,7 @@ public class MissionControllerImpl implements MissionController {
             String event_id = request.getParameter("event_id");
             String big_json = request.getParameter("big_json");
 
-            System.out.println(big_json);
+
 
             if (mission_id == null || mission_id.isEmpty() ||event_id == null || event_id.isEmpty()||big_json == null || big_json.isEmpty() ) {
                 result.put("errMsg", "输入参数有误");
@@ -1845,7 +1846,57 @@ public class MissionControllerImpl implements MissionController {
         HttpOutUtil.outData(response, JSONObject.toJSONString(result));
     }
 
+    //, produces = "application/json; charset=utf-8"
+    @RequestMapping(method = { RequestMethod.POST }, params = "action=missionTime")
+    public void missionTime(HttpServletRequest request, HttpServletResponse response) {
 
+        //ApplicationContext context = getContext();
+        missionJsonDAOImpl missionJsonDAO = (missionJsonDAOImpl) context.getBean("missionJsonDAO");
+
+        JSONObject result = new JSONObject();
+        result.put("result", "10001");
+
+
+        try {
+
+            String time = request.getParameter("time");
+            String mission_id = request.getParameter("mission_id");
+            String type = request.getParameter("type");
+
+
+            if (mission_id == null || mission_id.isEmpty() ) {
+                result.put("errMsg", "输入参数有误");
+                result.put("result","10001");
+            } else {
+
+
+                if("1".equals(type)){
+                    missionTimeDO missionTimeDO = new missionTimeDO();
+                    missionTimeDO.setMission_id(mission_id);
+                    missionTimeDO.setTime(time);
+                    missionTimeDO.setType(type);
+                    missionJsonDAO.insert1(missionTimeDO);
+                }else{
+                    missionTimeDO missionTimeDO = new missionTimeDO();
+                    missionTimeDO.setMission_id(mission_id);
+                    missionTimeDO.setTime(time);
+                    missionTimeDO.setType(type);
+                    missionJsonDAO.insert2(missionTimeDO);
+                }
+
+                System.out.println("insert-ok\\\"1\\\"||\\\"2\\\"");
+                result.put("errMsg", "保存成功！");
+                result.put("result","10000");
+
+
+            }
+        } catch (Exception e) {
+            result.put("essMsg", e.getMessage());
+
+        }
+        // 输出结果
+        HttpOutUtil.outData(response, JSONObject.toJSONString(result));
+    }
 
     @RequestMapping(method = { RequestMethod.POST }, params = "action=exceptionDetail")
     public void exceptionDetail(HttpServletRequest request, HttpServletResponse response) {
@@ -2092,14 +2143,14 @@ public class MissionControllerImpl implements MissionController {
                 result.put("errMsg", "输入参数有误");
                 result.put("result","10001");
             } else {
-
+                String rt = report_time.replace('_',' ');
 
                 insertExceptionDO insertExceptionDO = new insertExceptionDO();
                 insertExceptionDO.setCheckpoint(checkpoint);
                 insertExceptionDO.setDescription(description);
                 insertExceptionDO.setLevel(level);
                 insertExceptionDO.setReport_worker(report_worker);
-                insertExceptionDO.setReport_time(report_time);
+                insertExceptionDO.setReport_time(rt);
                 insertExceptionDO.setWorkshop(workshop);
                 insertExceptionDO.setPic(pic+".jpg");
                 insertExceptionDAO.insert(insertExceptionDO);

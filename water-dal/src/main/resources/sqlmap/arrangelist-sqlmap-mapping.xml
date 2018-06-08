@@ -2,22 +2,41 @@
 <!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
 <sqlMap namespace="unifyum">
 
-	<resultMap id="RM.arrangeList"
-		class="com.bupt.qrj.unifyum.dal.dataobject.arrangeListDO">
+    <resultMap id="RM.arrangeList"
+               class="com.bupt.qrj.unifyum.dal.dataobject.arrangeListDO">
 
-		<result property="set_time" column="set_time" javaType="java.lang.String"
-			jdbcType="VARCHAR" />
-		<result property="worker_name" column="worker_name" javaType="java.lang.String"
-				jdbcType="VARCHAR" />
-		<result property="work_type" column="work_type" javaType="java.lang.String"
-				jdbcType="VARCHAR" />
-
-
-	</resultMap>
+        <result property="type" column="type" javaType="java.lang.String"
+                jdbcType="VARCHAR" nullValue="0"/>
+        <result property="worker_name" column="worker_name" javaType="java.lang.String"
+                jdbcType="VARCHAR" nullValue="0"/>
+        <result property="work_type" column="work_type" javaType="java.lang.String"
+                jdbcType="VARCHAR" nullValue="0"/>
 
 
-<select id="arrange-List" resultMap="RM.arrangeList">
-	select set_time,worker_name,work_type from arrange_worker where time_left &lt;= #date# and time_right &gt;=#date# and set_time = #set_time# and type = '1';
-</select>
+    </resultMap>
 
+    <resultMap id="RM.arrsetmis"
+               class="com.bupt.qrj.unifyum.dal.dataobject.arrangesetmisDO">
+
+        <result property="set_id" column="set_id" javaType="java.lang.String"
+                jdbcType="VARCHAR"/>
+        <result property="mission" column="mission" javaType="java.lang.String"
+                jdbcType="VARCHAR"/>
+        <result property="mission_type" column="mission_type" javaType="java.lang.String"
+                jdbcType="VARCHAR"/>
+
+
+    </resultMap>
+
+    <select id="arrange-List" resultMap="RM.arrangeList">
+        select worker_info.name as worker_name,aw.type,aw.work_type from worker_info left join (select
+        type,worker_name,work_type from arrange_worker where time_left &lt;= #date# and time_right &gt;=#date#
+        and set_time = #set_time# ) as aw on aw.worker_name = worker_info.name;
+
+        <!--select set_time,worker_name,work_type from arrange_worker where time_left &lt;= #date# and time_right &gt;=#date#-->
+        <!--and set_time = #set_time# and type = '1';-->
+    </select>
+    <select id="arr-set-mis" resultMap="RM.arrsetmis">
+        select set_id,mission,mission_type from set_mission order by set_id desc limit 30;
+    </select>
 </sqlMap>

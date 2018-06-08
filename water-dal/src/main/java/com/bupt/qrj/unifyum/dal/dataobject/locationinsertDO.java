@@ -22,11 +22,15 @@ public class locationinsertDO {
     private String id;
     private String longitude;
     private String latitude;
+    private String mission_id;
 
+    public String getMission_id() {
+        return mission_id;
+    }
 
-
-
-
+    public void setMission_id(String mission_id) {
+        this.mission_id = mission_id;
+    }
 
     public String getLongitude() {
         return longitude;

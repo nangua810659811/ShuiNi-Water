@@ -29,6 +29,7 @@ public class arrangepermisDAOImpl extends SqlMapClientDaoSupport implements arra
         abbys.put("worker_name",worker_name);
         abbys.put("timemin",timemmin);
         abbys.put("timemax",timemmax);
+        abbys.put("set_start_time_code",set_start_time_code);
 //        System.out.println(timemmin+timemmax);
         List<arrangepermisDO> rets = this.getSqlMapClientTemplate().queryForList("arrange-per-mis", abbys);
         /*System.out.println(rets);*/

@@ -62,4 +62,6 @@
 		  parent="unifyumSqlMapClientDAO" />
 	<bean id="arrsetmisDAO" class="com.bupt.qrj.unifyum.dal.dao.impl.arrsetmisDAOImpl"
 		  parent="unifyumSqlMapClientDAO" />
+	<bean id="MissionReturnArrDAO" class="com.bupt.qrj.unifyum.dal.dao.impl.MissionReturnArrDAOImpl"
+		  parent="unifyumSqlMapClientDAO" />
 </beans>

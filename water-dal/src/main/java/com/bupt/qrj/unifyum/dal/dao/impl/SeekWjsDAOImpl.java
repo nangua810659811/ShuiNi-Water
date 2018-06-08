@@ -38,10 +38,10 @@ public class SeekWjsDAOImpl extends SqlMapClientDaoSupport implements
 		List<SeekWjsDO> rets = this.getSqlMapClientTemplate().queryForList(
 				"Mission-Seek-Wjs",phone);
 		LOGGER.debug("do the TestData user list over");
-		if (rets == null || rets.size() == 0) {
-			LOGGER.debug("do the user list return null");
-			return null;
-		}
+//		if (rets == null || rets.size() == 0) {
+//			LOGGER.debug("do the user list return null");
+//			return null;
+//		}
 //		System.out.println(rets);
 		return rets;
 	}

@@ -30,10 +30,23 @@ public class arrsetmisDAOImpl extends SqlMapClientDaoSupport implements
 	public void insert(arrsetmisDO arrsetmisDO) throws DataAccessException {
 
 
-		this.getSqlMapClientTemplate().insert("arrange-worker-insert",
+		this.getSqlMapClientTemplate().insert("arr-set-mis-insert",
 				arrsetmisDO);
-    }
 
+
+
+    }
+	public void update(arrsetmisDO arrsetmisDO) throws DataAccessException {
+
+
+		try{
+			this.getSqlMapClientTemplate().update("arr-set-mis-insert-type-change",
+					arrsetmisDO);
+		}catch (Exception e){
+			System.out.println("error");
+		}
+
+	}
 
 	public arrfeedbackDO get(arrfeedbackDO arrfeedbackDO) throws DataAccessException {
 

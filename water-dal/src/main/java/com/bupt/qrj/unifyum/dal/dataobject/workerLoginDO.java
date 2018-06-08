@@ -30,6 +30,15 @@ public class workerLoginDO {
 	private String phone;
 	private String password;
 
+	public String getRandom() {
+		return random;
+	}
+
+	public void setRandom(String random) {
+		this.random = random;
+	}
+
+	private String random;
 
 
 

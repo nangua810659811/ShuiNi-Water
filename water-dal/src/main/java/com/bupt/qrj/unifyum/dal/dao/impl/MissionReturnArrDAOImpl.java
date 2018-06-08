@@ -51,10 +51,10 @@ public class MissionReturnArrDAOImpl extends SqlMapClientDaoSupport implements
 			return null;
         HashMap<String,Object> abc = new HashMap<String, Object>();
         abc.put("column_key",column_key);
-        abc.put("mission",mission_id);
+        abc.put("mission_id",mission_id);
 
         String rets = (String) this.getSqlMapClientTemplate()
-				.queryForObject("Mission-Value-1", abc);
+				.queryForObject("Mission-Value", abc);
 
         return rets;
 	}

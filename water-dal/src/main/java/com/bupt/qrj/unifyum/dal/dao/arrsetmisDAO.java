@@ -20,7 +20,7 @@ public interface arrsetmisDAO {
 	public void insert(arrsetmisDO arrsetmisDO) throws DataAccessException;
 
 
-
+	public void update(arrsetmisDO arrsetmisDO) throws DataAccessException;
 
 	public arrfeedbackDO get(arrfeedbackDO arrfeedbackDO);
 

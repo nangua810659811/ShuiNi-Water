@@ -61,6 +61,16 @@ public class setMissionDO {
 
 	private String name;
 	private String content;
+
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
+
+	private String value;
 	private String font_color;
 	private String font_size;
 	private String array;

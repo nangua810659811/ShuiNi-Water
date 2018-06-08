@@ -35,6 +35,14 @@ public class arrfeedbackDAOImpl extends SqlMapClientDaoSupport implements
 
 
 
+	public void delete(String set_id) throws DataAccessException {
+
+
+		this.getSqlMapClientTemplate().delete("set-mission-DELETE",
+				set_id);
+		LOGGER.debug("do the userMeta success");
+	}
+
 
 
 }

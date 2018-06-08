@@ -13,12 +13,14 @@
                 jdbcType="varchar" nullValue="0"/>
         <result property="mission" column="mission_name" javaType="java.lang.String"
                 jdbcType="varchar" nullValue="0"/>
+		<result property="mission_id" column="id" javaType="java.lang.String"
+				jdbcType="varchar" nullValue="0"/>
 
 
 	</resultMap>
 
 	<select id="arrange-seek-mis" resultMap="RM.arrangeseekmis">
-		select period_start_time,set_start_time_code,mission_condition,mission_name from mission where period_start_time &lt;= #timemmax# and period_start_time &gt;= #timemmin#;
+		select id,period_start_time,set_start_time_code,mission_condition,mission_name from mission where period_start_time &lt;= #timemmax# and period_start_time &gt;= #timemmin#;
 	</select>
 
     <!--mission_condition = '1' and-->

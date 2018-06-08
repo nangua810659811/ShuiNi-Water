@@ -7,6 +7,7 @@ import com.bupt.qrj.unifyum.dal.dao.arrangeinsertDAO;
 import com.bupt.qrj.unifyum.dal.dao.missionJsonDAO;
 import com.bupt.qrj.unifyum.dal.dataobject.arrangeinsertDO;
 import com.bupt.qrj.unifyum.dal.dataobject.missionJsonDO;
+import com.bupt.qrj.unifyum.dal.dataobject.missionTimeDO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
@@ -34,7 +35,18 @@ public class missionJsonDAOImpl extends SqlMapClientDaoSupport implements
     }
 
 
+	public void insert1(missionTimeDO missionTimeDO) throws DataAccessException {
 
 
+		this.getSqlMapClientTemplate().update("mission-Time",
+				missionTimeDO);
+	}
+
+	public void insert2(missionTimeDO missionTimeDO) throws DataAccessException {
+
+
+		this.getSqlMapClientTemplate().update("mission-Time1",
+				missionTimeDO);
+	}
 
 }

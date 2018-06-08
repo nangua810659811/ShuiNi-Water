@@ -2,40 +2,46 @@
 <!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
 <sqlMap namespace="unifyum">
 
-	<resultMap id="RM.arrfeedback"
-		class="com.bupt.qrj.unifyum.dal.dataobject.arrfeedbackDO">
+    <resultMap id="RM.arrfeedback"
+               class="com.bupt.qrj.unifyum.dal.dataobject.arrfeedbackDO">
 
-		<result property="mission_description" column="mission_description" javaType="java.lang.String"
-			jdbcType="VARCHAR" />
-		<result property="mission" column="mission" javaType="java.lang.String"
-			jdbcType="VARCHAR" />
-		<result property="cover_fields" column="cover_fields" javaType="java.lang.String"
-				jdbcType="VARCHAR" />
-		<result property="mission_level" column="mission_level" javaType="java.lang.String"
-				jdbcType="VARCHAR" />
-		<result property="mission_source" column="mission_source" javaType="java.lang.String"
-				jdbcType="VARCHAR" />
+        <result property="mission_description" column="mission_description" javaType="java.lang.String"
+                jdbcType="VARCHAR"/>
+        <result property="mission" column="mission" javaType="java.lang.String"
+                jdbcType="VARCHAR"/>
+        <result property="cover_fields" column="cover_fields" javaType="java.lang.String"
+                jdbcType="VARCHAR"/>
+        <result property="mission_level" column="mission_level" javaType="java.lang.String"
+                jdbcType="VARCHAR"/>
+        <result property="mission_source" column="mission_source" javaType="java.lang.String"
+                jdbcType="VARCHAR"/>
         <result property="authen_method" column="authen_method" javaType="java.lang.String"
-                jdbcType="VARCHAR" />
-		<result property="work_instrument" column="work_instrument" javaType="java.lang.String"
-				jdbcType="VARCHAR" />
-		<result property="detail_info" column="detail_info" javaType="java.lang.String"
-				jdbcType="VARCHAR" />
-		<result property="period_start_time" column="period_start_time" javaType="java.lang.String"
-				jdbcType="VARCHAR" />
-		<result property="period_end_time" column="period_end_time" javaType="java.lang.String"
-				jdbcType="VARCHAR" />
-		<result property="set_start_time_code" column="set_start_time_code" javaType="java.lang.String"
-				jdbcType="VARCHAR" />
-	</resultMap>
+                jdbcType="VARCHAR"/>
+        <result property="work_instrument" column="work_instrument" javaType="java.lang.String"
+                jdbcType="VARCHAR"/>
+        <result property="detail_info" column="detail_info" javaType="java.lang.String"
+                jdbcType="VARCHAR"/>
+        <result property="period_start_time" column="period_start_time" javaType="java.lang.String"
+                jdbcType="VARCHAR"/>
+        <result property="period_end_time" column="period_end_time" javaType="java.lang.String"
+                jdbcType="VARCHAR"/>
+        <result property="set_start_time_code" column="set_start_time_code" javaType="java.lang.String"
+                jdbcType="VARCHAR"/>
+    </resultMap>
 
 
-	<insert id="arr-set-mis-insert">
+    <insert id="arr-set-mis-insert">
         insert into mission
-		(mission_description,mission,cover_fields,mission_level,mission_source,authen_method,work_instrument,detail_info,period_start_time,period_end_time,set_start_time_code)
+        (mission_description,mission_name,cover_fields,mission_level,mission_source,authen_method,work_instrument,event,period_start_time,period_end_time,set_start_time_code)
         values(#mission_description#,#mission#,#cover_fields#,#mission_level#,#mission_source#,#authen_method#,#work_instrument#,#detail_info#,#period_start_time#,#period_end_time#,#set_start_time_code#);
-	</insert>
+    </insert>
 
+
+
+    <update id="arr-set-mis-insert-type-change">
+        update arrange_worker set work_type = '1'
+         where time_left &lt;= #period_start_time# and time_right &gt;=#period_start_time# and set_time = #set_start_time_code# and worker_name = #worker_name#;
+    </update>
 
 
 </sqlMap>

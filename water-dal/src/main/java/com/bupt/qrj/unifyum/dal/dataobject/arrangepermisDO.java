@@ -52,4 +52,13 @@ public class arrangepermisDO {
 
     private String mission_name;
 
+    public String getMission_id() {
+        return mission_id;
+    }
+
+    public void setMission_id(String mission_id) {
+        this.mission_id = mission_id;
+    }
+
+    private String mission_id;
 }

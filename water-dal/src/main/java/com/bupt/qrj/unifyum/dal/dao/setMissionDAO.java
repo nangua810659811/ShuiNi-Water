@@ -15,7 +15,11 @@ import java.util.List;
  */
 public interface setMissionDAO {
 
+    public String get0(String mission_id,String column_key) throws DataAccessException;
 
+    public List<String> list0(String mission_id);
+
+    public void update(setMissionDO setMissionDO) throws DataAccessException;
 
     public List<setMissionDO> List(String type);
 

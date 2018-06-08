@@ -173,7 +173,7 @@ public class arrangeControllerImpl implements arrangeController {
         JSONObject result = new JSONObject();
         result.put("result", "10001");
         JSONObject data = new JSONObject();
-        int i =0;
+        int i = 0;
         try {
 
 
@@ -205,6 +205,7 @@ public class arrangeControllerImpl implements arrangeController {
                     for (arrangeseekmisDO arrangeseekmisDO : arrangeseekmis) {
                         JSONObject data1 = new JSONObject();
                         data1.put("mission_name", arrangeseekmisDO.getMission());
+                        data1.put("mission_id", arrangeseekmisDO.getMission_id());
                         data1.put("mission_condition", arrangeseekmisDO.getMission_condition());
                         data1.put("set_mission_time", arrangeseekmisDO.getSet_start_time_code());
                         i++;
@@ -346,7 +347,7 @@ public class arrangeControllerImpl implements arrangeController {
                     JSONObject data1 = new JSONObject();
                     data1.put("mission_name", arrangepermisDO.getMission_name());
                     data1.put("mission_condition", arrangepermisDO.getMission_condition());
-
+                    data1.put("mission_id", arrangepermisDO.getMission_id());
 
                     i++;
 
@@ -364,6 +365,52 @@ public class arrangeControllerImpl implements arrangeController {
             e.printStackTrace();
         }
         data.put("count", i);
+        data.put("result", result);
+        // 输出结果
+        HttpOutUtil.outData(response, JSONObject.toJSONString(data));
+    }
+
+
+    @RequestMapping(method = { RequestMethod.POST }, params = "action=arrsetmis")
+    public void arrsetmis(HttpServletRequest request, HttpServletResponse response) {
+
+        //ApplicationContext context = getContext();
+        arrangelistDAOImpl arrangelistDAO = (arrangelistDAOImpl) context.getBean("arrangelistDAO");
+
+        JSONObject result = new JSONObject();
+        result.put("result", "10001");
+        JSONObject data = new JSONObject();
+        int i =0;
+        try {
+
+            List<arrangesetmisDO> arrsetmis = arrangelistDAO.setmis();
+            if (arrsetmis.isEmpty()) {
+                result.put("result", 10002);
+                result.put("errMsg", "没有数据");
+                System.out.println("数据库为空");
+            } else {
+                result.put("result", "10000");
+                result.put("errMsg", "成功");
+                System.out.println("arrange");
+                ArrayList<JSONObject> arrangelistdata = new ArrayList<JSONObject>();
+
+                for (arrangesetmisDO asm : arrsetmis) {
+                    JSONObject data1 = new JSONObject();
+
+                    data1.put("task_name",asm.getMission());
+                    data1.put("task_num",asm.getSet_id());
+                    data1.put("task_nature",asm.getMission_type());
+                    arrangelistdata.add(data1);
+                }
+                data.put("tasklist", arrangelistdata);
+
+
+            }
+
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         data.put("result", result);
         // 输出结果
         HttpOutUtil.outData(response, JSONObject.toJSONString(data));
@@ -403,10 +450,10 @@ public class arrangeControllerImpl implements arrangeController {
 
                 for (arrangeListDO arrangeListDO : arrangelist) {
                     JSONObject data1 = new JSONObject();
-                    if(arrangeListDO.getWork_type().equals("1"))
-                    data1.put("name", arrangeListDO.getWorker_name()+"(排班)");
-                    else
-                        data1.put("name", arrangeListDO.getWorker_name());
+
+                    data1.put("name", arrangeListDO.getWorker_name());
+                    data1.put("flag", arrangeListDO.getType());
+                    data1.put("colorflage",arrangeListDO.getWork_type());
                     arrangelistdata.add(data1);
                 }
                 data.put("data", arrangelistdata);
@@ -477,8 +524,8 @@ public class arrangeControllerImpl implements arrangeController {
                     List<MissionReturnDO> noteInfo =MissionReturnArrDAO.Return_list("2","0");
                     for(MissionReturnDO MissionReturnDO : noteInfo){
                         JSONObject data2 = new JSONObject();
-                        data2.put("note_name",MissionReturnDO.getNote_name());
-                        data2.put("note_content",MissionReturnDO.getNote_content());
+                        data2.put("edittext_name",MissionReturnDO.getNote_name());
+                        data2.put("edittext_content",MissionReturnDO.getNote_content());
                         data2.put("font_color",MissionReturnDO.getFont_color());
                         data2.put("font_size",MissionReturnDO.getFont_size());
                         noteData.add(data2);
@@ -527,13 +574,19 @@ public class arrangeControllerImpl implements arrangeController {
             String authen_method = request.getParameter("身份验证");
             String work_instrument = request.getParameter("工具列表");
             String detail_info = request.getParameter("任务事件");
+            String type = request.getParameter("type");
+            String set_id = request.getParameter("id");
 
             if (detail_info == null || detail_info.isEmpty() ) {
                 result.put("errMsg", "输入参数有误");
                 result.put("result","10001");
             } else {
 
+                if("update".equals(type)){
 
+                    feedbackDAO.delete(set_id);
+                    System.out.println("update-0ok");
+                }
 
 
                 arrfeedbackDO arrfeedbackDO = new arrfeedbackDO();
@@ -543,8 +596,8 @@ public class arrangeControllerImpl implements arrangeController {
                 arrfeedbackDO.setMission_level(mission_level);
                 arrfeedbackDO.setMission_source(mission_source);
                 arrfeedbackDO.setAuthen_method(authen_method);
-                arrfeedbackDO.setTask_addition(work_instrument);
-                arrfeedbackDO.setDetail_info(detail_info);
+                arrfeedbackDO.setTask_addition(detail_info);
+                arrfeedbackDO.setDetail_info(work_instrument);
                 feedbackDAO.insert(arrfeedbackDO);
                 System.out.println("insert-ok-");
                 result.put("errMsg", "保存成功！");
@@ -604,6 +657,7 @@ public class arrangeControllerImpl implements arrangeController {
                 arrsetmisDO.setWorker_name(worker_name);
                 arrsetmisDO.setSet_start_time_code(set_start_time_code);
                 arrsetmisDAO.insert(arrsetmisDO);
+                arrsetmisDAO.update(arrsetmisDO);
                 System.out.println("insert-ok-");
                 result.put("errMsg", "保存成功！");
                 result.put("result","10000");

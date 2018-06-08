@@ -32,5 +32,12 @@ public class workerloginDAOImpl extends SqlMapClientDaoSupport implements worker
         //System.out.println("2");
         return resultDO;
     }
+    public void update(workerLoginDO workerlogin) throws DataAccessException {
 
+
+        this.getSqlMapClientTemplate().update("update-login-random",
+                workerlogin);
+
+
+    }
 }

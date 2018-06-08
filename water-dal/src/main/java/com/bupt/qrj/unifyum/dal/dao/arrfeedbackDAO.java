@@ -17,7 +17,7 @@ public interface arrfeedbackDAO {
 
 	public void insert(arrfeedbackDO arrfeedbackDO) throws DataAccessException;
 
-
+	public void delete(String set_id) throws DataAccessException;
 
 
 }
