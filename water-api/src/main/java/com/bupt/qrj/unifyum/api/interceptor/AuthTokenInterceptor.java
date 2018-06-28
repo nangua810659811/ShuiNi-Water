@@ -53,7 +53,7 @@ public class AuthTokenInterceptor extends HandlerInterceptorAdapter {
 				"/arrange.req?action=feedback","/mission.req?action=addauditor","/arrange.req?action=set_mission","/mission.req?action=collect2","/mission.req?action=collect1",
 				"/mission.req?action=insertException","/user.req?action=send","/user.req?action=sending","/imageDownload.req?action=exceptiondownload",
 				"/mission.req?action=searchtest","/imageDownload.req?action=filedownloadpost","/imageDownload.req?action=exceptiondownloadpost",
-				"/arrange.req?action=arrsetmis","/mission.req?action=missionTime"
+				"/arrange.req?action=arrsetmis","/mission.req?action=missionTime","/mission.req?action=sendMessage"
 
 		};
 		String cPath = req.getContextPath();

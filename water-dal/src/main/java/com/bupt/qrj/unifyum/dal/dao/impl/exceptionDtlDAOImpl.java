@@ -36,6 +36,13 @@ public class exceptionDtlDAOImpl extends SqlMapClientDaoSupport implements excep
        
         return rets;
     }
+    /*    private static final Logger LOGGER = LoggerFactory.getLogger(seekwjsDAOImpl.class);*/
+    public List<exceptionDtlDO> list1() {
+
+        List<exceptionDtlDO> rets = this.getSqlMapClientTemplate().queryForList("select-exception-dtl1");
+
+        return rets;
+    }
     public void insert(insertExceptionDO insertExceptionDO) throws DataAccessException {
 
 

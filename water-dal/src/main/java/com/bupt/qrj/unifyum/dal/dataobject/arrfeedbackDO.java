@@ -83,6 +83,15 @@ public class arrfeedbackDO {
 	private String authen_method;
 	private String task_addition;
 
+	public String getItem() {
+		return item;
+	}
+
+	public void setItem(String item) {
+		this.item = item;
+	}
+
+	private String item;
 	public String getTask_addition() {
 		return task_addition;
 	}

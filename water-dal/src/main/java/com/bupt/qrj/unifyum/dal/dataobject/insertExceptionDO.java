@@ -73,6 +73,16 @@ public class insertExceptionDO {
 
 	private String level;
 
+	public String getMission_id() {
+		return mission_id;
+	}
+
+	public void setMission_id(String mission_id) {
+		this.mission_id = mission_id;
+	}
+
+	private String mission_id;
+
 	private String report_worker;
 
 	public String getPic() {
@@ -84,4 +94,23 @@ public class insertExceptionDO {
 	}
 
 	private String pic;
+	private String jingdu;
+
+	public String getJingdu() {
+		return jingdu;
+	}
+
+	public void setJingdu(String jingdu) {
+		this.jingdu = jingdu;
+	}
+
+	public String getWeidu() {
+		return weidu;
+	}
+
+	public void setWeidu(String weidu) {
+		this.weidu = weidu;
+	}
+
+	private String weidu;
 }

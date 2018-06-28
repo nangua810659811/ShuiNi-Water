@@ -26,8 +26,8 @@
 
 	<insert id="arr-feedback-insert">
         insert into set_mission
-		(mission_description,mission,cover_fields,mission_level,mission_source,authen_method,event,detail_info)
-        values(#mission_description#,#mission#,#cover_fields#,#mission_level#,#mission_source#,#authen_method#,#task_addition#,#detail_info#);
+		(mission_description,mission,cover_fields,mission_level,mission_source,authen_method,event,detail_info,material)
+        values(#mission_description#,#mission#,#cover_fields#,#mission_level#,#mission_source#,#authen_method#,#task_addition#,#detail_info#,#item#);
 	</insert>
 
 	<select id="select-arrfeedback" resultMap="RM.arrfeedback">

@@ -21,6 +21,8 @@ public interface MissionDetailDAO {
 
 	public String get(String mission_id, String column_key) throws DataAccessException;
 
+	public String getname(String mission_id) throws DataAccessException;
+
     public void update(MissionReturnDO missionReturnDO) throws DataAccessException;
 
     public List<MissionReturnDO> Return_list(String level_one, String level_two);

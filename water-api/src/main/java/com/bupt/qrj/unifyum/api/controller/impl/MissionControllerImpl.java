@@ -353,9 +353,44 @@ public class MissionControllerImpl implements MissionController {
                     for(materialDO ib1 : inbutton00){
                         JSONObject data3 = new JSONObject();
                         data3.put("content_name",ib1.getName());
+                        data3.put("content_id",ib1.getId());
                         data3.put("content_isselect","false");
+
                         formatinspectionbuttoncontent1.add(data3);
                     }
+                    //add chosen gongju  peijian shijian
+                    ArrayList<JSONObject> chosen1 = new ArrayList<JSONObject>();
+                    ArrayList<JSONObject> chosen2 = new ArrayList<JSONObject>();
+                    ArrayList<JSONObject> chosen3 = new ArrayList<JSONObject>();
+                    String c1 = setMissionDAO.get1(id);
+                    String c2 = setMissionDAO.get2(id);
+                    String c3 = setMissionDAO.get3(id);
+                    List<setMissionInfoNameDO> n1 = setMissionDAO.Chosenlist1(c1);
+                    List<setMissionInfoNameDO> n2 = setMissionDAO.Chosenlist2(c2);
+                    List<setMissionInfoNameDO> n3 = setMissionDAO.Chosenlist3(c3);
+                    ArrayList<JSONObject> al1 = new ArrayList<JSONObject>();
+                    ArrayList<JSONObject> al2 = new ArrayList<JSONObject>();
+                    ArrayList<JSONObject> al3 = new ArrayList<JSONObject>();
+                    for(setMissionInfoNameDO in1 : n1){
+                        JSONObject data1 = new JSONObject();
+                        data1.put("content_name",in1.getName());
+                        data1.put("content_id",in1.getId());
+                        al1.add(data1);
+                    }
+                    for(setMissionInfoNameDO in2 : n2){
+                        JSONObject data2 = new JSONObject();
+                        data2.put("content_name",in2.getName());
+                        data2.put("content_id",in2.getId());
+                        al2.add(data2);
+                    }
+                    for(setMissionInfoNameDO in3 : n3){
+                        JSONObject data3 = new JSONObject();
+                        data3.put("content_name",in3.getName());
+                        data3.put("content_id",in3.getId());
+                        al3.add(data3);
+                    }
+
+
                     System.out.println(type);
                     type = "7";
                     String array = "1";
@@ -365,6 +400,7 @@ public class MissionControllerImpl implements MissionController {
                     databutton0.put("button_content","选择工具");
                     databutton0.put("needtextview","true");
                     databutton0.put("needshownum","false");
+                    databutton0.put("chosen",al1);
                     databutton0.put("content",formatinspectionbuttoncontent1);
                     databutton0.put("font_color",inbutton0.getFont_color());
                     databutton0.put("font_size",inbutton0.getFont_size());
@@ -376,6 +412,7 @@ public class MissionControllerImpl implements MissionController {
                     for(materialDO ib1 : inbutton11){
                         JSONObject data3 = new JSONObject();
                         data3.put("content_name",ib1.getName());
+                        data3.put("content_id",ib1.getId());
                         data3.put("content_isselect","0");
                         formatinspectionbuttoncontent2.add(data3);
                     }
@@ -388,6 +425,7 @@ public class MissionControllerImpl implements MissionController {
                     databutton1.put("button_content","选择配件");
                     databutton1.put("needtextview","true");
                     databutton1.put("needshownum","true");
+                    databutton1.put("chosen",al2);
                     databutton1.put("content",formatinspectionbuttoncontent2);
                     databutton1.put("font_color",inbutton1.getFont_color());
                     databutton1.put("font_size",inbutton1.getFont_size());
@@ -412,6 +450,7 @@ public class MissionControllerImpl implements MissionController {
                     databutton2.put("button_content","选择事件");
                     databutton2.put("needtextview","false");
                     databutton2.put("needshownum","false");
+                    databutton2.put("chosen",al3);
                     databutton2.put("content",formatinspectionbuttoncontent3);
                     databutton2.put("font_color",inbutton2.getFont_color());
                     databutton2.put("font_size",inbutton2.getFont_size());
@@ -660,7 +699,7 @@ public class MissionControllerImpl implements MissionController {
                 workerloginDO.setRandom(random);
                 workerloginDAO.update(workerloginDO);
 
-                SendMessage.sendMessage(phone, "您的随机验证码为：" + random);
+                SendMessage.sendMessage(phone, "验证码为：" + random);
                 result.put("errMsg", "chenggong");
                 result.put("result", "10000");
             }
@@ -1499,6 +1538,7 @@ public class MissionControllerImpl implements MissionController {
             for(materialDO ib1 : inbutton00){
                 JSONObject data3 = new JSONObject();
                 data3.put("content_name",ib1.getName());
+                data3.put("content_id",ib1.getId());
                 data3.put("content_isselect","false");
                 formatinspectionbuttoncontent1.add(data3);
             }
@@ -1521,6 +1561,7 @@ public class MissionControllerImpl implements MissionController {
             for(materialDO ib1 : inbutton11){
                 JSONObject data3 = new JSONObject();
                 data3.put("content_name",ib1.getName());
+                data3.put("content_id",ib1.getId());
                 data3.put("content_isselect","0");
                 formatinspectionbuttoncontent2.add(data3);
             }
@@ -1543,6 +1584,7 @@ public class MissionControllerImpl implements MissionController {
             for(EventInfoDO ib2 : inbutton22){
                 JSONObject data4 = new JSONObject();
                 data4.put("content_name",ib2.getEvent_name());
+                data4.put("content_id",ib2.getEvent_id());
 //                data4.put("content_note",ib2.getAdditions());
                 data4.put("content_isselect","false");
                 formatinspectionbuttoncontent3.add(data4);
@@ -1727,8 +1769,10 @@ public class MissionControllerImpl implements MissionController {
                     }
 
                     MissionReturnDO task_info =MissionDetailDAO.get_first();
+                    String name = MissionDetailDAO.getname(MissionId);
                     JSONObject data = new JSONObject();
                     data.put("task_ID",MissionId);
+                    data.put("taskname",name);
                     data.put("font_size",task_info.getFont_size());
                     data.put("font_color",task_info.getFont_color());
                     data.put("note",noteInfo);
@@ -1912,32 +1956,20 @@ public class MissionControllerImpl implements MissionController {
             String time1 = request.getParameter("time1");
             String time2 = request.getParameter("time2");
             String status = request.getParameter("abnormal_status");
-            if (time1==null||time1.isEmpty()||time2==null||time2.isEmpty()) {
-//            time2 = new SimpleDateFormat("yyyy-MM").format(new Date());
-                result.put("errMsg", "输入参数有误");
-                result.put("result","10001");
-//            SimpleDateFormat ym=new SimpleDateFormat("yyyy-MM");
-//            Calendar ymmax = Calendar.getInstance();
-//            ymmax.setTime(ym.parse(time2));
-//            ymmax.add(Calendar.MONTH,-5);
-//            Date dt1 = ymmax.getTime();
-//            time1 = ym.format(dt1);
-//            System.out.println(time1+","+time2);
-            } else {
-            List<exceptionDtlDO> exDtl = exceptionDtlDAO.list(time1,time2,status);
-            if(exDtl.isEmpty()){
-                result.put("errMsg","empty");
-            }else{
+            String type = request.getParameter("type");
+            if("first".equals(type)){
+                List<exceptionDtlDO> exDtl = exceptionDtlDAO.list1();
                 ArrayList<JSONObject> exception = new ArrayList<JSONObject>();
                 for(exceptionDtlDO exceptionDtl : exDtl){
                     JSONObject data1 = new JSONObject();
                     data1.put("abnormal_id",exceptionDtl.getId());
                     data1.put("abnormal_time",exceptionDtl.getReport_time());
-                    data1.put("abnormal_person",exceptionDtl.getReport_worker());
                     data1.put("workshop",exceptionDtl.getWorkshop());
+                    data1.put("abnormal_person",exceptionDtl.getReport_worker());
                     data1.put("abnormal_check_point",exceptionDtl.getCheckpoint());
                     data1.put("abnormal_description",exceptionDtl.getDescription());
                     data1.put("abnormal_level",exceptionDtl.getLevel());
+                    data1.put("taskname",exceptionDtl.getMission_id());
                     exception.add(data1);
                 }
 
@@ -1945,8 +1977,45 @@ public class MissionControllerImpl implements MissionController {
                 result.put("data",exception);
                 result.put("essMsg","10000");
                 result.put("result","10000");
+            }else {
+                if (time1==null||time1.isEmpty()||time2==null||time2.isEmpty()) {
+//            time2 = new SimpleDateFormat("yyyy-MM").format(new Date());
+                    result.put("errMsg", "输入参数有误");
+                    result.put("result","10001");
+//            SimpleDateFormat ym=new SimpleDateFormat("yyyy-MM");
+//            Calendar ymmax = Calendar.getInstance();
+//            ymmax.setTime(ym.parse(time2));
+//            ymmax.add(Calendar.MONTH,-5);
+//            Date dt1 = ymmax.getTime();
+//            time1 = ym.format(dt1);
+//            System.out.println(time1+","+time2);
+                } else {
+                    List<exceptionDtlDO> exDtl = exceptionDtlDAO.list(time1,time2,status);
+                    if(exDtl.isEmpty()){
+                        result.put("errMsg","empty");
+                    }else{
+                        ArrayList<JSONObject> exception = new ArrayList<JSONObject>();
+                        for(exceptionDtlDO exceptionDtl : exDtl){
+                            JSONObject data1 = new JSONObject();
+                            data1.put("abnormal_id",exceptionDtl.getId());
+                            data1.put("abnormal_time",exceptionDtl.getReport_time());
+                            data1.put("abnormal_person",exceptionDtl.getReport_worker());
+                            data1.put("workshop",exceptionDtl.getWorkshop());
+                            data1.put("abnormal_check_point",exceptionDtl.getCheckpoint());
+                            data1.put("abnormal_description",exceptionDtl.getDescription());
+                            data1.put("abnormal_level",exceptionDtl.getLevel());
+                            data1.put("taskname",exceptionDtl.getMission_id());
+                            exception.add(data1);
+                        }
+
+
+                        result.put("data",exception);
+                        result.put("essMsg","10000");
+                        result.put("result","10000");
+                    }
                 }
             }
+
         } catch (Exception e) {
             result.put("essMsg", e.getMessage());
             LOGGER.warn("exception when login: " + e.getMessage());
@@ -2138,6 +2207,9 @@ public class MissionControllerImpl implements MissionController {
             String report_time = request.getParameter("abnormal_time");
             String workshop = request.getParameter("workshop");
             String pic = request.getParameter("pic");
+            String jingdu = request.getParameter("jingdu");
+            String weidu = request.getParameter("weidu");
+            String mission_id = request.getParameter("mission_id");
 
             if (checkpoint == null || checkpoint.isEmpty() ||workshop == null || workshop.isEmpty()||report_worker == null || report_worker.isEmpty() ) {
                 result.put("errMsg", "输入参数有误");
@@ -2152,6 +2224,9 @@ public class MissionControllerImpl implements MissionController {
                 insertExceptionDO.setReport_worker(report_worker);
                 insertExceptionDO.setReport_time(rt);
                 insertExceptionDO.setWorkshop(workshop);
+                insertExceptionDO.setJingdu(jingdu);
+                insertExceptionDO.setWeidu(weidu);
+                insertExceptionDO.setMission_id(mission_id);
                 insertExceptionDO.setPic(pic+".jpg");
                 insertExceptionDAO.insert(insertExceptionDO);
                 System.out.println("insert-ok\\\"1\\\"||\\\"2\\\"");

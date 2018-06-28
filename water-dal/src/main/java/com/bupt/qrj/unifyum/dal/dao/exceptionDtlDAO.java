@@ -21,6 +21,7 @@ public interface exceptionDtlDAO {
 
 
 	public List<exceptionDtlDO> list(String ymmin, String ymmax,String status);
+	public List<exceptionDtlDO> list1();
 
 	public void insert(insertExceptionDO insertExceptionDO) throws DataAccessException;
 }

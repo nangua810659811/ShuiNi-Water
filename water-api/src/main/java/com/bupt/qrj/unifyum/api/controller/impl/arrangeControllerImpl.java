@@ -574,6 +574,7 @@ public class arrangeControllerImpl implements arrangeController {
             String authen_method = request.getParameter("身份验证");
             String work_instrument = request.getParameter("工具列表");
             String detail_info = request.getParameter("任务事件");
+            String item = request.getParameter("配件列表");
             String type = request.getParameter("type");
             String set_id = request.getParameter("id");
 
@@ -590,6 +591,7 @@ public class arrangeControllerImpl implements arrangeController {
 
 
                 arrfeedbackDO arrfeedbackDO = new arrfeedbackDO();
+                arrfeedbackDO.setItem(item);
                 arrfeedbackDO.setMission(mission);
                 arrfeedbackDO.setMission_description(mission_description);
                 arrfeedbackDO.setCover_fields(cover_fields);
@@ -626,13 +628,14 @@ public class arrangeControllerImpl implements arrangeController {
 
         try {
 
-            String period_start_time = request.getParameter("time1");
+            String period_start_time1 = request.getParameter("time1");
             String period_end_time = request.getParameter("time2");
             String mission = request.getParameter("taskname");
             String worker_name = request.getParameter("taskpeople");
             String set_start_time_code = request.getParameter("tasktime");
 
 
+            String period_start_time = period_start_time1+" 00:00:00";
             if (mission == null || mission.isEmpty() ) {
                 result.put("errMsg", "输入参数有误");
                 result.put("result","10001");
@@ -641,6 +644,12 @@ public class arrangeControllerImpl implements arrangeController {
                 arrfeedbackDO.setMission(mission);
 
                 arrfeedbackDO user = arrsetmisDAO.get(arrfeedbackDO);
+
+                arrgetworkerDO arrgetworkerDO = new arrgetworkerDO();
+                arrgetworkerDO.setName(worker_name);
+
+                arrgetworkerDO user1 = arrsetmisDAO.getworker(arrgetworkerDO);
+
 
                 arrsetmisDO arrsetmisDO = new arrsetmisDO();
                 arrsetmisDO.setMission(mission);
@@ -651,7 +660,8 @@ public class arrangeControllerImpl implements arrangeController {
                 arrsetmisDO.setAuthen_method(user.getAuthen_method());
                 arrsetmisDO.setWork_instrument(user.getTask_addition());
                 arrsetmisDO.setDetail_info(user.getDetail_info());
-
+                arrsetmisDO.setWorker_phone(user1.getPhone());
+                arrsetmisDO.setTeam(user1.getTeam());
                 arrsetmisDO.setPeriod_start_time(period_start_time);
                 arrsetmisDO.setPeriod_end_time(period_end_time);
                 arrsetmisDO.setWorker_name(worker_name);

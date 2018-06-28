@@ -127,4 +127,23 @@ public class arrsetmisDO {
 	}
 
 	private String worker_name;
+	private String team;
+
+	public String getTeam() {
+		return team;
+	}
+
+	public void setTeam(String team) {
+		this.team = team;
+	}
+
+	public String getWorker_phone() {
+		return worker_phone;
+	}
+
+	public void setWorker_phone(String worker_phone) {
+		this.worker_phone = worker_phone;
+	}
+
+	private String worker_phone;
 }

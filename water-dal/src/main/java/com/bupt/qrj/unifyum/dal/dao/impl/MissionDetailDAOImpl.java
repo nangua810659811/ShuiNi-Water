@@ -58,6 +58,15 @@ public class MissionDetailDAOImpl extends SqlMapClientDaoSupport implements
         return rets;
 	}
 
+    public String getname(String mission_id) throws DataAccessException {
+
+
+        String rets = (String) this.getSqlMapClientTemplate()
+                .queryForObject("Mission-nameget", mission_id);
+
+        return rets;
+    }
+
     public void update(MissionReturnDO missionReturnDO) throws DataAccessException {
         if (missionReturnDO == null) {
             throw new IllegalArgumentException(

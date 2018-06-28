@@ -23,17 +23,21 @@
 				jdbcType="int" nullValue="0"/>
         <result property="id" column="id" javaType="java.lang.String"
                 jdbcType="int" nullValue="0"/>
+		<result property="mission_id" column="mission_id" javaType="java.lang.String"
+				jdbcType="int" nullValue="0"/>
 	</resultMap>
 
 	<select id="select-exception-dtl" resultMap="RM.exceptionDtl">
-		select id,workshop,event,checkpoint,level,description,report_worker,report_time,status from exception where level = #status# and report_time between #ymmin# and #ymmax#;
+		select mission_id,id,workshop,event,checkpoint,level,description,report_worker,report_time,status from exception where level = #status# and report_time between #ymmin# and #ymmax#;
 	</select>
-
+	<select id="select-exception-dtl1" resultMap="RM.exceptionDtl">
+		select mission_id,id,workshop,event,checkpoint,level,description,report_worker,report_time,status from exception order by id desc limit 5;
+	</select>
 
 	<insert id="exception-insert">
 		insert into exception
-		(checkpoint,description,report_time,workshop,level,report_worker,pic)
-		values(#checkpoint#,#description#,#report_time#,#workshop#,#level#,#report_worker#,#pic#);
+		(checkpoint,description,report_time,workshop,level,report_worker,pic,jingdu,weidu,mission_id)
+		values(#checkpoint#,#description#,#report_time#,#workshop#,#level#,#report_worker#,#pic#,#jingdu#,#weidu#,#mission_id#);
 	</insert>
 	<!--<select id="USER-LIST" resultClass="java.lang.String">-->
 		<!--select user_name from  login	group by user_name;		-->

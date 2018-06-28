@@ -84,6 +84,10 @@
 		select $column_key$ from mission where id = #mission_id#;
 	</select>
 
+	<select id="Mission-nameget" resultClass="java.lang.String">
+		select set_id from mission where id = #mission_id#;
+	</select>
+
 	<select id="Mission-Value-11" parameterClass="map" resultClass="java.lang.String" remapResults="true" >
 		select $column_key$ from mission where mission_name = #mission#;
 	</select>

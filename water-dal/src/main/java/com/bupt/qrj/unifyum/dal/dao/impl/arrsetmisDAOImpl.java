@@ -7,6 +7,7 @@ import com.bupt.qrj.unifyum.dal.dao.arrangeinsertDAO;
 import com.bupt.qrj.unifyum.dal.dao.arrsetmisDAO;
 import com.bupt.qrj.unifyum.dal.dataobject.arrangeinsertDO;
 import com.bupt.qrj.unifyum.dal.dataobject.arrfeedbackDO;
+import com.bupt.qrj.unifyum.dal.dataobject.arrgetworkerDO;
 import com.bupt.qrj.unifyum.dal.dataobject.arrsetmisDO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,6 +59,13 @@ public class arrsetmisDAOImpl extends SqlMapClientDaoSupport implements
 		//System.out.println("2");
 		return resultDO;
 	}
+	public arrgetworkerDO getworker(arrgetworkerDO arrgetworkerDO) throws DataAccessException {
 
+
+		arrgetworkerDO resultDO = (arrgetworkerDO) this.getSqlMapClientTemplate()
+				.queryForObject("arr-set-mis-insert-get-worker", arrgetworkerDO);
+		//System.out.println("2");
+		return resultDO;
+	}
 
 }

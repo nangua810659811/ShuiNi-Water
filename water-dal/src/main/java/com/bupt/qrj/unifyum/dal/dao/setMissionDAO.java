@@ -29,5 +29,13 @@ public interface setMissionDAO {
 
     public setMissionDO get(String type, String array) throws DataAccessException;
 
+    public String get1(String taskname) throws DataAccessException;
+    public String get2(String taskname) throws DataAccessException;
+    public String get3(String taskname) throws DataAccessException;
+
+    public List<setMissionInfoNameDO> Chosenlist1(String abc);
+    public List<setMissionInfoNameDO> Chosenlist2(String abc);
+    public List<setMissionInfoNameDO> Chosenlist3(String abc);
+
     public List<setMissioninfoDO> Mission_list();
 }

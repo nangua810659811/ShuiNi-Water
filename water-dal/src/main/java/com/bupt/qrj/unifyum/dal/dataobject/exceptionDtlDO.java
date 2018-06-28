@@ -100,7 +100,13 @@ public class exceptionDtlDO {
 	private String workshop;
 
 	private String event;
+	private String mission_id;
 
+	public String getMission_id() {
+		return mission_id;
+	}
 
-	
+	public void setMission_id(String mission_id) {
+		this.mission_id = mission_id;
+	}
 }

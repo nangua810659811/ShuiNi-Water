@@ -145,4 +145,48 @@ public class setMissionDAOImpl extends SqlMapClientDaoSupport implements
 
         return rets;
     }
+
+    public String get1(String taskname) throws DataAccessException {
+
+        String resultDO =(String) this.getSqlMapClientTemplate()
+                .queryForObject("Set_Mission-Info-get1",taskname);
+
+        return resultDO;
+    }
+    public String get2(String taskname) throws DataAccessException {
+
+        String resultDO =(String) this.getSqlMapClientTemplate()
+                .queryForObject("Set_Mission-Info-get2",taskname);
+
+        return resultDO;
+    }
+    public String get3(String taskname) throws DataAccessException {
+
+        String resultDO =(String) this.getSqlMapClientTemplate()
+                .queryForObject("Set_Mission-Info-get3",taskname);
+
+        return resultDO;
+    }
+
+    public List<setMissionInfoNameDO> Chosenlist1(String abc) {
+
+        List<setMissionInfoNameDO> rets = this.getSqlMapClientTemplate().queryForList(
+                "Set_Mission-Info-list1",abc);
+
+        return rets;
+    }
+    public List<setMissionInfoNameDO> Chosenlist2(String abc) {
+
+        List<setMissionInfoNameDO> rets = this.getSqlMapClientTemplate().queryForList(
+                "Set_Mission-Info-list2",abc);
+
+        return rets;
+    }
+    public List<setMissionInfoNameDO> Chosenlist3(String abc) {
+
+        List<setMissionInfoNameDO> rets = this.getSqlMapClientTemplate().queryForList(
+                "Set_Mission-Info-list3",abc);
+
+        return rets;
+    }
 }

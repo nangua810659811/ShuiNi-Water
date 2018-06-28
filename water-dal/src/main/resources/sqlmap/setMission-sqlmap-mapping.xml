@@ -25,6 +25,8 @@
 				jdbcType="int" nullValue="0"/>
 		<result property="description" column="description" javaType="java.lang.String"
 				jdbcType="VARCHAR" nullValue="0"/>
+		<result property="id" column="id" javaType="java.lang.String"
+				jdbcType="VARCHAR" nullValue="0"/>
 
 		<result property="name" column="name" javaType="java.lang.String"
 				jdbcType="VARCHAR" nullValue="0"/>
@@ -54,6 +56,20 @@
 
     </resultMap>
 
+    <resultMap id="RM.setMissionInfoNameDO"
+               class="com.bupt.qrj.unifyum.dal.dataobject.setMissionInfoNameDO">
+        <result property="id" column="id" javaType="java.lang.String"
+                jdbcType="int" nullValue="0"/>
+        <result property="name" column="name" javaType="java.lang.String"
+                jdbcType="VARCHAR" nullValue="0"/>
+    </resultMap>
+    <resultMap id="RM.setMissionInfoNameDO1"
+               class="com.bupt.qrj.unifyum.dal.dataobject.setMissionInfoNameDO">
+        <result property="id" column="event_id" javaType="java.lang.String"
+                jdbcType="int" nullValue="0"/>
+        <result property="name" column="event_name" javaType="java.lang.String"
+                jdbcType="VARCHAR" nullValue="0"/>
+    </resultMap>
 	<select id="set-Return-Key" resultClass="java.lang.String">
         select value from set_mission_return
         where value is not null;
@@ -72,7 +88,7 @@
 	</select>
 
 	<select id="Material-List" resultMap="RM.material">
-		select type,description,name from material where type = #type#;
+		select id,type,description,name from material where type = #type#;
 	</select>
 
 	<select id="Set_Mission-Info" resultMap="RM.Set_Mission">
@@ -86,18 +102,25 @@
         select id,mission_name from mission order by id desc limit 5;
     </select>
 
-	<!--<select id="USER-LIST" resultClass="java.lang.String">-->
-		<!--select user_name from  login	group by user_name;		-->
-	<!--</select>-->
+    <select id="Set_Mission-Info-get1" resultClass="java.lang.String">
+        select detail_info from set_mission where set_id = #taskname#  order by set_id desc limit 1;
+    </select>
+    <select id="Set_Mission-Info-get2" resultClass="java.lang.String">
+        select material from set_mission where set_id = #taskname# order by set_id desc limit 1;
+    </select>
+    <select id="Set_Mission-Info-get3" resultClass="java.lang.String">
+        select event from set_mission where set_id = #taskname# order by set_id desc limit 1;
+    </select>
 
-	<!--<select id="UNIFYUM-USER-GET" parameterClass="com.bupt.qrj.unifyum.dal.dataobject.UserDO"-->
-		<!--resultMap="RM.User">-->
-		<!--select * from user-->
-		<!--<dynamic prepend="where">-->
-			<!--<isNotNull prepend="AND" property="userName">-->
-				<!--user_name = #userName#-->
-			<!--</isNotNull>-->
-		<!--</dynamic>-->
-	<!--</select>-->
+    <select id="Set_Mission-Info-list1" resultMap="RM.setMissionInfoNameDO">
+        select id,name from material where id in ($abc$);
+    </select>
+    <select id="Set_Mission-Info-list2" resultMap="RM.setMissionInfoNameDO">
+        select id,name from material where id in ($abc$);
+    </select>
+    <select id="Set_Mission-Info-list3" resultMap="RM.setMissionInfoNameDO1">
+        select event_id,event_name from event_info where event_id in ($abc$);
+    </select>
+
 
 </sqlMap>

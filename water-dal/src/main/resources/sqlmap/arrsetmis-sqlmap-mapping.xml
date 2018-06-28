@@ -28,15 +28,27 @@
         <result property="set_start_time_code" column="set_start_time_code" javaType="java.lang.String"
                 jdbcType="VARCHAR"/>
     </resultMap>
+    <resultMap id="RM.arr-get-worker"
+               class="com.bupt.qrj.unifyum.dal.dataobject.arrgetworkerDO">
 
+        <result property="name" column="name" javaType="java.lang.String"
+                jdbcType="VARCHAR"/>
+        <result property="team" column="team" javaType="java.lang.String"
+                jdbcType="VARCHAR"/>
+        <result property="phone" column="phone" javaType="java.lang.String"
+                jdbcType="VARCHAR"/>
+
+    </resultMap>
 
     <insert id="arr-set-mis-insert">
         insert into mission
-        (mission_description,mission_name,cover_fields,mission_level,mission_source,authen_method,work_instrument,event,period_start_time,period_end_time,set_start_time_code)
-        values(#mission_description#,#mission#,#cover_fields#,#mission_level#,#mission_source#,#authen_method#,#work_instrument#,#detail_info#,#period_start_time#,#period_end_time#,#set_start_time_code#);
+        (mission_description,mission_name,cover_fields,mission_level,mission_source,authen_method,work_instrument,event,period_start_time,period_end_time,set_start_time_code,worker_name,worker_phone,team)
+        values(#mission_description#,#mission#,#cover_fields#,#mission_level#,#mission_source#,#authen_method#,#work_instrument#,#detail_info#,#period_start_time#,#period_end_time#,#set_start_time_code#,#worker_name#,#worker_phone#,#team#);
     </insert>
 
-
+    <select id="arr-set-mis-insert-get-worker" resultMap="RM.arr-get-worker">
+        select name,team,phone from worker_info where name = #name# order by id desc limit 1;
+   </select>
 
     <update id="arr-set-mis-insert-type-change">
         update arrange_worker set work_type = '1'
