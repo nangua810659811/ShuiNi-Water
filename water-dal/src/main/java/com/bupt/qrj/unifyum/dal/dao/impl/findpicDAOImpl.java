@@ -4,6 +4,7 @@
 package com.bupt.qrj.unifyum.dal.dao.impl;
 
 import com.bupt.qrj.unifyum.dal.dao.findpicDAO;
+import com.bupt.qrj.unifyum.dal.dataobject.apkinfoDO;
 import com.bupt.qrj.unifyum.dal.dataobject.picinfoDO;
 import com.bupt.qrj.unifyum.dal.dataobject.picinfoexceptionDO;
 import org.slf4j.Logger;
@@ -49,6 +50,16 @@ public class findpicDAOImpl extends SqlMapClientDaoSupport implements
 		//System.out.println("1");
 		picinfoexceptionDO resultDO = (picinfoexceptionDO) this.getSqlMapClientTemplate()
 				.queryForObject("find-pic-exception", picinfoexceptionDO);
+		//System.out.println("2");
+		return resultDO;
+	}
+
+	public apkinfoDO getApk(apkinfoDO apkinfoDO) throws DataAccessException {
+
+
+		//System.out.println("1");
+		apkinfoDO resultDO = (apkinfoDO) this.getSqlMapClientTemplate()
+				.queryForObject("find-apk", apkinfoDO);
 		//System.out.println("2");
 		return resultDO;
 	}

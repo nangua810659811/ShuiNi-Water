@@ -19,7 +19,7 @@
 	</resultMap>
 
 	<select id="arrange-per-mis" resultMap="RM.arrangepermis">
-		select id,period_start_time,mission_condition,mission_name,worker_name from mission where period_start_time &lt;= #timemax# and period_start_time &gt;= #timemin# and worker_name = #worker_name# and set_start_time_code = #set_start_time_code#;
+		select id,period_start_time,mission_condition,mission_name,worker_name from mission where period_start_time &lt;= #timemax# and period_start_time &gt;= #timemin# and worker_name = #worker_name# and set_start_time_code = #set_start_time_code# and factory_id = #factory_id#;
 	</select>
 
     <!--mission_condition = '1' and-->

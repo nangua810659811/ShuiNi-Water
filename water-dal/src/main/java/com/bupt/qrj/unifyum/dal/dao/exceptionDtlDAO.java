@@ -20,8 +20,8 @@ public interface exceptionDtlDAO {
 
 
 
-	public List<exceptionDtlDO> list(String ymmin, String ymmax,String status);
-	public List<exceptionDtlDO> list1();
-
+	public List<exceptionDtlDO> list(String ymmin, String ymmax,String status ,String factory_id);
+	public List<exceptionDtlDO> list1(String factory_id);
+	public String get(String name) throws DataAccessException;
 	public void insert(insertExceptionDO insertExceptionDO) throws DataAccessException;
 }

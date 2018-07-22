@@ -57,6 +57,16 @@ public class arrangeinsertDO {
     private String type;
     private String worker_name;
 
+    public String getFactory_id() {
+        return factory_id;
+    }
+
+    public void setFactory_id(String factory_id) {
+        this.factory_id = factory_id;
+    }
+
+    private String factory_id;
+
 
 
 }

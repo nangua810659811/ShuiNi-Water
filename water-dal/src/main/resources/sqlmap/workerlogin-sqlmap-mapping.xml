@@ -11,7 +11,8 @@
 			jdbcType="varchar"/>
         <result property="random" column="random" javaType="java.lang.String"
                 jdbcType="varchar"/>
-
+		<result property="factory_id" column="factory_id" javaType="java.lang.String"
+				jdbcType="varchar"/>
     </resultMap>
 
 <!--	<select id="WORKER-LOGIN" resultMap="RM.workerlogin">
@@ -20,7 +21,7 @@
 
 	<select id="WORKER-LOGIN" parameterClass="com.bupt.qrj.unifyum.dal.dataobject.workerLoginDO"
 			resultMap="RM.workerlogin">
-		select phone,password,random from worker_info
+		select phone,password,random,factory_id from worker_info
 		<dynamic prepend="where">
 			<isNotNull prepend="AND" property="phone">
 				phone = #phone#
@@ -28,6 +29,9 @@
 		</dynamic>
 	</select>
 
+	<select id="nesest-version" resultClass="java.lang.String">
+		select version from apk_version order by id desc limit 1;
+	</select>
 
 	<update id="update-login-random">
 		update worker_info set random = #random# where phone = #phone#;

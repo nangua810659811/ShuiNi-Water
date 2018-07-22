@@ -23,11 +23,11 @@ public class checkInfoDAOImpl extends SqlMapClientDaoSupport implements checkInf
     
 	 /** 日志 **/
 /*    private static final Logger LOGGER = LoggerFactory.getLogger(seekwjsDAOImpl.class);*/
-    public List<checkInfoDO> list() {
+    public List<checkInfoDO> list(String factory_id) {
 
 /*        HashMap<String,Object> abbs = new HashMap<String,Object>();
         abbs.put("worker_phone",worker_phone);*/
-        List<checkInfoDO> rets = this.getSqlMapClientTemplate().queryForList("select-finish-mission");
+        List<checkInfoDO> rets = this.getSqlMapClientTemplate().queryForList("select-finish-mission",factory_id);
        
         return rets;
     }

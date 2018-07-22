@@ -23,12 +23,12 @@
 
 	<insert id="arrange-worker-insert">
         insert into arrange_worker
-        (time_left,time_right,set_time,type,worker_name)
-        values(#time_left#,#time_right#,#set_time#,#type#,#worker_name#);
+        (time_left,time_right,set_time,type,worker_name,factory_id)
+        values(#time_left#,#time_right#,#set_time#,#type#,#worker_name#,#factory_id#);
 	</insert>
 
 	<update id="arrange-worker-UPDATE">
-		update arrange_worker set time_left = #time_left#,set_time = #set_time#,worker_name = #worker_name# where type = #type#;
+		update arrange_worker set type = #type# where time_left = #time_left# and set_time = #set_time# and worker_name = #worker_name#;
 	</update>
 
 

@@ -40,4 +40,14 @@ public class workerloginDAOImpl extends SqlMapClientDaoSupport implements worker
 
 
     }
+    public String getVersion() throws DataAccessException {
+
+
+        String rets = (String) this.getSqlMapClientTemplate()
+                .queryForObject("nesest-version");
+
+        return rets;
+    }
+
+
 }

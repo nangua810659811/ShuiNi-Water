@@ -26,21 +26,22 @@ public class arrangelistDAOImpl extends SqlMapClientDaoSupport implements arrang
     
 	 /** 日志 **/
 /*    private static final Logger LOGGER = LoggerFactory.getLogger(seekwjsDAOImpl.class);*/
-    public List<arrangeListDO> listarrangeList(String date,String time) {
+    public List<arrangeListDO> listarrangeList(String date,String time,String factory_id) {
 
         HashMap<String,Object> abbys = new HashMap<String,Object>();
         abbys.put("date",date);
         abbys.put("set_time",time);
+        abbys.put("factory_id",factory_id);
 
 /*        System.out.println(timemmin+timemmax);*/
         List<arrangeListDO> rets = this.getSqlMapClientTemplate().queryForList("arrange-List", abbys);
         /*System.out.println(rets);*/
         return rets;
     }
-    public List<arrangesetmisDO> setmis() {
+    public List<arrangesetmisDO> setmis(String factory_id) {
 
 
-        List<arrangesetmisDO> rets = this.getSqlMapClientTemplate().queryForList("arr-set-mis");
+        List<arrangesetmisDO> rets = this.getSqlMapClientTemplate().queryForList("arr-set-mis",factory_id);
 
         return rets;
     }

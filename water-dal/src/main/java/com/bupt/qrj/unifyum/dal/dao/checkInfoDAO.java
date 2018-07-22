@@ -18,7 +18,7 @@ public interface checkInfoDAO {
 	
 
 	
-	public List<checkInfoDO> list();
+	public List<checkInfoDO> list(String factory_id);
 
 
 }

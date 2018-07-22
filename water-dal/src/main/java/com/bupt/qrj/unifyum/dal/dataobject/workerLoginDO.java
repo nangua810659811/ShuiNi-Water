@@ -39,10 +39,13 @@ public class workerLoginDO {
 	}
 
 	private String random;
+	private String factory_id;
 
+	public String getFactory_id() {
+		return factory_id;
+	}
 
-
-
-
-	
+	public void setFactory_id(String factory_id) {
+		this.factory_id = factory_id;
+	}
 }

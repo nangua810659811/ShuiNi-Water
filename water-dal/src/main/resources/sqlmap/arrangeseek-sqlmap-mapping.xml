@@ -24,7 +24,7 @@
 
 	<select id="arrange-seek-null" resultMap="RM.arrangeseek">
 		select arrange_worker.worker_name,worker_info.team,worker_info.post,arrange_worker.type,arrange_worker.work_type,arrange_worker.set_time,time_left from arrange_worker,worker_info
-		where arrange_worker.worker_name = worker_info.name and time_left = #time_left# and arrange_worker.type = '1';
+		where arrange_worker.worker_name = worker_info.name and time_left = #time_left# and arrange_worker.type = '1' and worker_info.factory_id = #factory_id#;
 	</select>
 
     <!--mission_condition = '1' and-->

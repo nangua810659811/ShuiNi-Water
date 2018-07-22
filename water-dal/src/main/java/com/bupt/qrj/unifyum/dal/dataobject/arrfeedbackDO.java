@@ -63,6 +63,15 @@ public class arrfeedbackDO {
 	private String mission_level;
 
 	private String mission_source;
+	private String factory_id;
+
+	public String getFactory_id() {
+		return factory_id;
+	}
+
+	public void setFactory_id(String factory_id) {
+		this.factory_id = factory_id;
+	}
 
 	public String getAuthen_method() {
 		return authen_method;
@@ -101,7 +110,32 @@ public class arrfeedbackDO {
 	}
 
 	private String detail_info;
+	private String mission_type;
 
+	public String getMission_type() {
+		return mission_type;
+	}
 
-	
+	public void setMission_type(String mission_type) {
+		this.mission_type = mission_type;
+	}
+
+	public String getSet_time() {
+		return set_time;
+	}
+
+	public void setSet_time(String set_time) {
+		this.set_time = set_time;
+	}
+
+	private String set_time;
+	private String set_id;
+
+	public String getSet_id() {
+		return set_id;
+	}
+
+	public void setSet_id(String set_id) {
+		this.set_id = set_id;
+	}
 }

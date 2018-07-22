@@ -68,6 +68,16 @@ public class insertExceptionDO {
 
 	private String report_time;
 
+	public String getFactory() {
+		return factory;
+	}
+
+	public void setFactory(String factory) {
+		this.factory = factory;
+	}
+
+	private String factory;
+
 	private String workshop;
 
 

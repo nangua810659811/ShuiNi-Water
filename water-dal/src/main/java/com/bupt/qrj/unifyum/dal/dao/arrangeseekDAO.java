@@ -16,7 +16,7 @@ import java.util.List;
 public interface arrangeseekDAO {
 
 
-	public List<arrangeseekDO> listarrangeseek(String timemmin);
+	public List<arrangeseekDO> listarrangeseek(String timemmin,String factory_id);
 
-	public List<arrangeseekmisDO> listarrangeseekmis(String timemmin, String timemmax);
+	public List<arrangeseekmisDO> listarrangeseekmis(String timemmin, String timemmax,String factory_id);
 }

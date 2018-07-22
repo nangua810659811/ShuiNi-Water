@@ -2,6 +2,7 @@ package com.bupt.qrj.unifyum.api.controller.impl;
 
 import com.bupt.qrj.unifyum.dal.dao.impl.findpicDAOImpl;
 
+import com.bupt.qrj.unifyum.dal.dataobject.apkinfoDO;
 import com.bupt.qrj.unifyum.dal.dataobject.picinfoDO;
 import com.bupt.qrj.unifyum.dal.dataobject.picinfoexceptionDO;
 import org.springframework.context.ApplicationContext;
@@ -161,6 +162,67 @@ public class Filedownload extends HttpServlet{
 		out.close();
 	}
 
+	@RequestMapping(method = { RequestMethod.GET }, params = "action=apkdownload")
+	public void doGetapk(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		findpicDAOImpl findpicDAO = (findpicDAOImpl) context.getBean("findpicDAO");
+
+		String version = request.getParameter("version");
+
+
+
+
+		System.out.println("no header 2");
+		apkinfoDO apkinfoDO = new apkinfoDO();
+        apkinfoDO.setVersion(version);
+
+
+        apkinfoDO user = findpicDAO.getApk(apkinfoDO);
+		String patha = user.getFile();
+		System.out.println(patha+" mission_pic");
+//            }
+
+		//String path = "D:\\Program Files\\Apache Software Foundation\\apache-tomcat-7.0.73\\webapps\\water" +patha;
+		String path = "C:\\apache-tomcat-8.5.23\\webapps\\water\\WEB-INF\\upload\\" +patha;
+
+            /*String pathb = "F:\\upload\\abc.jpg";*/
+		//witcher3
+
+
+		String fileName = patha;
+
+
+
+		File file = new File(path);
+
+		if(!file.exists()){
+			request.setAttribute("message", "您要下载的资源已被删除！！");
+			request.getRequestDispatcher("/message.jsp").forward(request, response);
+			return;
+		}
+
+		String realname = fileName.substring(fileName.indexOf("_")+1);
+
+		response.setHeader("content-disposition", "filename=" + URLEncoder.encode(realname, "UTF-8"));
+
+		FileInputStream in = new FileInputStream(path);
+
+		OutputStream out = response.getOutputStream();
+
+		byte buffer[] = new byte[1024];
+		int len = 0;
+
+		while((len=in.read(buffer))>0){
+
+			out.write(buffer, 0, len);
+		}
+
+		in.close();
+
+		out.close();
+	}
+
 
 		@RequestMapping(method = { RequestMethod.POST }, params = "action=exceptiondownloadpost")
 		public void doPostexception(HttpServletRequest request, HttpServletResponse response)
@@ -173,6 +235,14 @@ public class Filedownload extends HttpServlet{
 			throws ServletException, IOException {
 		doGet(request, response);
 	}
+
+	@RequestMapping(method = { RequestMethod.POST }, params = "action=apkdownloadpost")
+	public void doPostapk(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doGetapk(request, response);
+	}
+
+
 	}
 
 

@@ -17,5 +17,5 @@ public interface arrangepermisDAO {
 
 
 
-	public List<arrangepermisDO> listarrangepermis(String worker_name, String timemmin, String timemmax, String set_start_time_code);
+	public List<arrangepermisDO> listarrangepermis(String worker_name, String timemmin, String timemmax, String set_start_time_code,String factory_id);
 }

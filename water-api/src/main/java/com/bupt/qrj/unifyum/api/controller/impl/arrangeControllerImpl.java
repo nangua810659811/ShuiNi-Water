@@ -111,6 +111,7 @@ public class arrangeControllerImpl implements arrangeController {
                 String set_worker_time = getJsonObj.getString("set_worker_time");
                 String worker_name = getJsonObj.getString("worker_name");
                 String flag = getJsonObj.getString("flag");
+                String factory_id = getJsonObj.getString("factory_id");
                 String time1 = time11 + " 00:00:00";
                 String time2 = time22 + " 00:00:00";
                 System.out.println(flag);
@@ -130,6 +131,7 @@ public class arrangeControllerImpl implements arrangeController {
                     arrangeinsertDO.setSet_time(set_worker_time);
                     arrangeinsertDO.setWorker_name(worker_name);
                     arrangeinsertDO.setType(flag);
+                    arrangeinsertDO.setFactory_id(factory_id);
                     arrangeinsertDAO.insert(arrangeinsertDO);
                     System.out.println(i);
 
@@ -141,7 +143,8 @@ public class arrangeControllerImpl implements arrangeController {
                     arrangeinsertDO.setTime_right(time2);
                     arrangeinsertDO.setSet_time(set_worker_time);
                     arrangeinsertDO.setWorker_name(worker_name);
-                    arrangeinsertDO.setType(flag);
+                    arrangeinsertDO.setFactory_id(factory_id);
+                    arrangeinsertDO.setType("2");
                     arrangeinsertDAO.update(arrangeinsertDO);
 
                 }
@@ -179,6 +182,7 @@ public class arrangeControllerImpl implements arrangeController {
 
             String time1 = request.getParameter("time1");
             String time2 = request.getParameter("time2");
+            String factory_id = request.getParameter("factory_id");
 
 
             String timemmin;
@@ -191,7 +195,7 @@ public class arrangeControllerImpl implements arrangeController {
 
 
 
-                List<arrangeseekmisDO> arrangeseekmis = arrangeseekDAO.listarrangeseekmis(timemmin,timemmax);
+                List<arrangeseekmisDO> arrangeseekmis = arrangeseekDAO.listarrangeseekmis(timemmin,timemmax,factory_id);
                 if (arrangeseekmis.isEmpty()) {
                     result.put("result", 10002);
                     result.put("errMsg", "没有数据");
@@ -245,6 +249,7 @@ public class arrangeControllerImpl implements arrangeController {
 
             String time1 = request.getParameter("time1");
             String time2 = request.getParameter("time2");
+            String factory_id = request.getParameter("factory_id");
 
 
             String timemmin;
@@ -255,7 +260,7 @@ public class arrangeControllerImpl implements arrangeController {
             System.out.println(timemmax);
             System.out.println(timemmin);
 
-            List<arrangeseekDO> arrangeseek = arrangeseekDAO.listarrangeseek(timemmin);
+            List<arrangeseekDO> arrangeseek = arrangeseekDAO.listarrangeseek(timemmin,factory_id);
             if (arrangeseek.isEmpty()) {
                 result.put("result", 10002);
                 result.put("errMsg", "没有数据");
@@ -324,6 +329,7 @@ public class arrangeControllerImpl implements arrangeController {
             String time2 = request.getParameter("time2");
             String set_start_time_code = request.getParameter("set_worker_time");
             String worker_name = request.getParameter("worker_name");
+            String factory_id = request.getParameter("factory_id");
             String timemmin;
             String timemmax;
             timemmin = time1 +" 00:00:00";
@@ -332,7 +338,7 @@ public class arrangeControllerImpl implements arrangeController {
             System.out.println(timemmax);
             System.out.println(timemmin);
 
-            List<arrangepermisDO> arrangepermis = arrangepermisDAO.listarrangepermis(worker_name,timemmin,timemmax,set_start_time_code);
+            List<arrangepermisDO> arrangepermis = arrangepermisDAO.listarrangepermis(worker_name,timemmin,timemmax,set_start_time_code,factory_id);
             if (arrangepermis.isEmpty()) {
                 result.put("result", 10002);
                 result.put("errMsg", "没有数据");
@@ -382,8 +388,9 @@ public class arrangeControllerImpl implements arrangeController {
         JSONObject data = new JSONObject();
         int i =0;
         try {
+            String factory_id = request.getParameter("factory_id");
 
-            List<arrangesetmisDO> arrsetmis = arrangelistDAO.setmis();
+            List<arrangesetmisDO> arrsetmis = arrangelistDAO.setmis(factory_id);
             if (arrsetmis.isEmpty()) {
                 result.put("result", 10002);
                 result.put("errMsg", "没有数据");
@@ -431,13 +438,14 @@ public class arrangeControllerImpl implements arrangeController {
 
             String time = request.getParameter("tasktime");
             String date1 = request.getParameter("taskdate");
+            String factory_id = request.getParameter("factory_id");
 
 
             String date = date1 +" 00:00:00";
 
 
 
-            List<arrangeListDO> arrangelist = arrangelistDAO.listarrangeList(date,time);
+            List<arrangeListDO> arrangelist = arrangelistDAO.listarrangeList(date,time,factory_id);
             if (arrangelist.isEmpty()) {
                 result.put("result", 10002);
                 result.put("errMsg", "没有数据");
@@ -445,7 +453,7 @@ public class arrangeControllerImpl implements arrangeController {
             } else {
                 result.put("result", "10000");
                 result.put("errMsg", "成功");
-                System.out.println("arrange-list");
+                System.out.println("");
                 ArrayList<JSONObject> arrangelistdata = new ArrayList<JSONObject>();
 
                 for (arrangeListDO arrangeListDO : arrangelist) {
@@ -577,6 +585,9 @@ public class arrangeControllerImpl implements arrangeController {
             String item = request.getParameter("配件列表");
             String type = request.getParameter("type");
             String set_id = request.getParameter("id");
+            String mission_type = request.getParameter("mission_type");
+            String set_time = request.getParameter("set_time");
+            String factory_id = request.getParameter("factory_id");
 
             if (detail_info == null || detail_info.isEmpty() ) {
                 result.put("errMsg", "输入参数有误");
@@ -600,6 +611,9 @@ public class arrangeControllerImpl implements arrangeController {
                 arrfeedbackDO.setAuthen_method(authen_method);
                 arrfeedbackDO.setTask_addition(detail_info);
                 arrfeedbackDO.setDetail_info(work_instrument);
+                arrfeedbackDO.setMission_type(mission_type);
+                arrfeedbackDO.setSet_time(set_time);
+                arrfeedbackDO.setFactory_id(factory_id);
                 feedbackDAO.insert(arrfeedbackDO);
                 System.out.println("insert-ok-");
                 result.put("errMsg", "保存成功！");
@@ -633,6 +647,8 @@ public class arrangeControllerImpl implements arrangeController {
             String mission = request.getParameter("taskname");
             String worker_name = request.getParameter("taskpeople");
             String set_start_time_code = request.getParameter("tasktime");
+            String set_name = request.getParameter("set_name");
+            String factory_id = request.getParameter("factory_id");
 
 
             String period_start_time = period_start_time1+" 00:00:00";
@@ -660,12 +676,16 @@ public class arrangeControllerImpl implements arrangeController {
                 arrsetmisDO.setAuthen_method(user.getAuthen_method());
                 arrsetmisDO.setWork_instrument(user.getTask_addition());
                 arrsetmisDO.setDetail_info(user.getDetail_info());
+                arrsetmisDO.setMission_type(user.getMission_type());
+                arrsetmisDO.setSet_name(set_name);
+                arrsetmisDO.setSet_id(user.getSet_id());
                 arrsetmisDO.setWorker_phone(user1.getPhone());
                 arrsetmisDO.setTeam(user1.getTeam());
                 arrsetmisDO.setPeriod_start_time(period_start_time);
                 arrsetmisDO.setPeriod_end_time(period_end_time);
                 arrsetmisDO.setWorker_name(worker_name);
                 arrsetmisDO.setSet_start_time_code(set_start_time_code);
+                arrsetmisDO.setFactory_id(factory_id);
                 arrsetmisDAO.insert(arrsetmisDO);
                 arrsetmisDAO.update(arrsetmisDO);
                 System.out.println("insert-ok-");

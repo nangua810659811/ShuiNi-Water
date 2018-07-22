@@ -4,6 +4,7 @@
 package com.bupt.qrj.unifyum.dal.dao;
 
 
+import com.bupt.qrj.unifyum.dal.dataobject.apkinfoDO;
 import com.bupt.qrj.unifyum.dal.dataobject.picinfoDO;
 import com.bupt.qrj.unifyum.dal.dataobject.picinfoexceptionDO;
 
@@ -22,4 +23,5 @@ public interface findpicDAO {
 	public picinfoDO getnewest(picinfoDO picinfo);
 
 	public picinfoexceptionDO getexception(picinfoexceptionDO picinfoexceptionDO);
+	public apkinfoDO getApk(apkinfoDO apkinfoDO);
 }

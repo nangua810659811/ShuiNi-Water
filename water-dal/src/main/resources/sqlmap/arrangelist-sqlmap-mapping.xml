@@ -29,14 +29,16 @@
     </resultMap>
 
     <select id="arrange-List" resultMap="RM.arrangeList">
-        select worker_info.name as worker_name,aw.type,aw.work_type from worker_info left join (select
+        <!--select worker_info.name as worker_name,aw.type,aw.work_type from worker_info left join (select-->
+        <!--type,worker_name,work_type from arrange_worker where time_left &lt;= #date# and time_right &gt;=#date#-->
+        <!--and set_time = #set_time# ) as aw on aw.worker_name = worker_info.name and worker_info.factory_id = #factory_id#;-->
+        select
         type,worker_name,work_type from arrange_worker where time_left &lt;= #date# and time_right &gt;=#date#
-        and set_time = #set_time# ) as aw on aw.worker_name = worker_info.name;
-
+        and set_time = #set_time# and factory_id = #factory_id#;
         <!--select set_time,worker_name,work_type from arrange_worker where time_left &lt;= #date# and time_right &gt;=#date#-->
         <!--and set_time = #set_time# and type = '1';-->
     </select>
     <select id="arr-set-mis" resultMap="RM.arrsetmis">
-        select set_id,mission,mission_type from set_mission order by set_id desc limit 30;
+        select set_id,mission,mission_type from set_mission where factory_id = #factory_id# order by set_id desc limit 30;
     </select>
 </sqlMap>

@@ -17,5 +17,6 @@ public interface workerloginDAO {
 	public workerLoginDO get(workerLoginDO workerloginDO);
 
 	public void update(workerLoginDO workerloginDO);
+	public String getVersion();
 
 }

@@ -18,7 +18,7 @@
 	</resultMap>
 
 	<select id="select-finish-mission" resultMap="RM.checkInfo">
-		select id,mission_condition,worker_name,finish_time from mission where mission_condition = "5" order by id desc;
+		select id,mission_condition,worker_name,finish_time from mission where mission_condition = "5" and factory_id = #factory_id# order by id desc;
 	</select>
 
 

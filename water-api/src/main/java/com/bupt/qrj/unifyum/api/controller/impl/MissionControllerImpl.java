@@ -657,6 +657,7 @@ public class MissionControllerImpl implements MissionController {
                         if (password.equals(user.getPassword())&&code.equals(user.getRandom())) {
                             result.put("result","10000");
                             result.put("errMsg", "登录成功");
+                            result.put("factory_id", user.getFactory_id());
 
                         } else {
                             result.put("errMsg", "密码或验证码错误");
@@ -670,6 +671,29 @@ public class MissionControllerImpl implements MissionController {
 		HttpOutUtil.outData(response, JSONObject.toJSONString(result));
 	}
 
+    @RequestMapping(method = { RequestMethod.POST }, params = "action=version")
+    public void versionCheck(HttpServletRequest request, HttpServletResponse response) {
+
+        //ApplicationContext context = getContext();
+        workerloginDAOImpl workerloginDAO = (workerloginDAOImpl) context.getBean("workerloginDAO");
+
+        JSONObject result = new JSONObject();
+        result.put("result", "10001");
+
+
+        try {
+                String  version = workerloginDAO.getVersion();
+
+
+                    result.put("version", version);
+
+
+
+        } catch (Exception e) {
+            result.put("essMsg", e.getMessage());
+        }
+        HttpOutUtil.outData(response, JSONObject.toJSONString(result));
+    }
 
 
 /*
@@ -727,6 +751,7 @@ public class MissionControllerImpl implements MissionController {
         try {
 
             String phone = request.getParameter("phone");
+            String factory_id = request.getParameter("factory_id");
 
 
 
@@ -736,7 +761,7 @@ public class MissionControllerImpl implements MissionController {
             } else {
                 // 获取用户的数据
 
-                List<checkInfoDO> readytodo = checkInfoDAO.list();
+                List<checkInfoDO> readytodo = checkInfoDAO.list(factory_id);
                 if (readytodo.isEmpty()) {
                     result.put("result", 10002);
                     result.put("errMsg", "没有数据");
@@ -897,6 +922,7 @@ public class MissionControllerImpl implements MissionController {
             String mission_name = request.getParameter("mission_name");
             String mission_condition = request.getParameter("mission_condition");
             String mission_type = request.getParameter("mission_type");
+            String factory = request.getParameter("factory_id");
 
 
             String timemin = time1 +" 00:00:00";
@@ -911,7 +937,7 @@ public class MissionControllerImpl implements MissionController {
                 mission_type="";
 
 
-            List<searchDO> search = searchDAO.list(worker,mission_name,mission_type,mission_condition,timemin,timemax);
+            List<searchDO> search = searchDAO.list(worker,mission_name,mission_type,mission_condition,timemin,timemax,factory);
             if (search.isEmpty()) {
                 result.put("result", 10002);
                 result.put("errMsg", "没有数据");
@@ -1314,7 +1340,7 @@ public class MissionControllerImpl implements MissionController {
             JSONObject a1 = new JSONObject();
             a1.put("spinner_name","任务级别");
             a1.put("spinner_content","无");
-            a1.put("spinner_array","无;班组;车间;公司");
+            a1.put("spinner_array","无;1级;2级;3级");
             a1.put("font_color","#080808");
             a1.put("font_size",20);
             addspinner.add(a1);
@@ -1509,7 +1535,7 @@ public class MissionControllerImpl implements MissionController {
             JSONObject a1 = new JSONObject();
             a1.put("spinner_name","任务级别");
             a1.put("spinner_content","无");
-            a1.put("spinner_array","无;班组;车间;公司");
+            a1.put("spinner_array","无;1级;2级;3级");
             a1.put("font_color","#080808");
             a1.put("font_size",20);
             addspinner.add(a1);
@@ -1957,8 +1983,9 @@ public class MissionControllerImpl implements MissionController {
             String time2 = request.getParameter("time2");
             String status = request.getParameter("abnormal_status");
             String type = request.getParameter("type");
+            String factory_id = request.getParameter("factory_id");
             if("first".equals(type)){
-                List<exceptionDtlDO> exDtl = exceptionDtlDAO.list1();
+                List<exceptionDtlDO> exDtl = exceptionDtlDAO.list1(factory_id);
                 ArrayList<JSONObject> exception = new ArrayList<JSONObject>();
                 for(exceptionDtlDO exceptionDtl : exDtl){
                     JSONObject data1 = new JSONObject();
@@ -1990,7 +2017,7 @@ public class MissionControllerImpl implements MissionController {
 //            time1 = ym.format(dt1);
 //            System.out.println(time1+","+time2);
                 } else {
-                    List<exceptionDtlDO> exDtl = exceptionDtlDAO.list(time1,time2,status);
+                    List<exceptionDtlDO> exDtl = exceptionDtlDAO.list(time1,time2,status,factory_id);
                     if(exDtl.isEmpty()){
                         result.put("errMsg","empty");
                     }else{
@@ -2217,6 +2244,10 @@ public class MissionControllerImpl implements MissionController {
             } else {
                 String rt = report_time.replace('_',' ');
 
+
+                String factory = insertExceptionDAO.get(report_worker);
+
+
                 insertExceptionDO insertExceptionDO = new insertExceptionDO();
                 insertExceptionDO.setCheckpoint(checkpoint);
                 insertExceptionDO.setDescription(description);
@@ -2225,6 +2256,7 @@ public class MissionControllerImpl implements MissionController {
                 insertExceptionDO.setReport_time(rt);
                 insertExceptionDO.setWorkshop(workshop);
                 insertExceptionDO.setJingdu(jingdu);
+                insertExceptionDO.setFactory(factory);
                 insertExceptionDO.setWeidu(weidu);
                 insertExceptionDO.setMission_id(mission_id);
                 insertExceptionDO.setPic(pic+".jpg");

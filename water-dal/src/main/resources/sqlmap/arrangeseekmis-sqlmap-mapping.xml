@@ -20,7 +20,7 @@
 	</resultMap>
 
 	<select id="arrange-seek-mis" resultMap="RM.arrangeseekmis">
-		select id,period_start_time,set_start_time_code,mission_condition,mission_name from mission where period_start_time &lt;= #timemmax# and period_start_time &gt;= #timemmin#;
+		select id,period_start_time,set_start_time_code,mission_condition,mission_name from mission where period_start_time &lt;= #timemmax# and period_start_time &gt;= #timemmin# and factory_id = #factory_id#;
 	</select>
 
     <!--mission_condition = '1' and-->

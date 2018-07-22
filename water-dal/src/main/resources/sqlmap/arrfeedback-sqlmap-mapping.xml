@@ -21,17 +21,23 @@
 				jdbcType="VARCHAR" />
 		<result property="detail_info" column="event" javaType="java.lang.String"
 				jdbcType="VARCHAR" />
+		<result property="set_id" column="set_id" javaType="java.lang.String"
+				jdbcType="VARCHAR" />
+		<result property="mission_type" column="mission_type" javaType="java.lang.String"
+				jdbcType="VARCHAR" />
+		<result property="set_time" column="set_time" javaType="java.lang.String"
+				jdbcType="VARCHAR" />
 	</resultMap>
 
 
 	<insert id="arr-feedback-insert">
         insert into set_mission
-		(mission_description,mission,cover_fields,mission_level,mission_source,authen_method,event,detail_info,material)
-        values(#mission_description#,#mission#,#cover_fields#,#mission_level#,#mission_source#,#authen_method#,#task_addition#,#detail_info#,#item#);
+		(mission_description,mission,cover_fields,mission_level,mission_source,authen_method,event,detail_info,material,mission_type,set_time,factory_id)
+        values(#mission_description#,#mission#,#cover_fields#,#mission_level#,#mission_source#,#authen_method#,#task_addition#,#detail_info#,#item#,#mission_type#,#set_time#,#factory_id#);
 	</insert>
 
 	<select id="select-arrfeedback" resultMap="RM.arrfeedback">
-		select mission_description,mission,cover_fields,mission_level,mission_source,authen_method,detail_info,event from set_mission where mission =#mission# order by set_id desc limit 1;
+		select set_id,mission_type,set_time,mission_description,mission,cover_fields,mission_level,mission_source,authen_method,detail_info,event from set_mission where mission =#mission# order by set_id desc limit 1;
 	</select>
 
 	<delete id="set-mission-DELETE">

@@ -42,8 +42,8 @@
 
     <insert id="arr-set-mis-insert">
         insert into mission
-        (mission_description,mission_name,cover_fields,mission_level,mission_source,authen_method,work_instrument,event,period_start_time,period_end_time,set_start_time_code,worker_name,worker_phone,team)
-        values(#mission_description#,#mission#,#cover_fields#,#mission_level#,#mission_source#,#authen_method#,#work_instrument#,#detail_info#,#period_start_time#,#period_end_time#,#set_start_time_code#,#worker_name#,#worker_phone#,#team#);
+        (mission_description,mission_name,cover_fields,mission_level,mission_source,authen_method,work_instrument,event,period_start_time,period_end_time,set_start_time_code,worker_name,worker_phone,team,set_id,mission_type,set_name,factory_id)
+        values(#mission_description#,#mission#,#cover_fields#,#mission_level#,#mission_source#,#authen_method#,#work_instrument#,#detail_info#,#period_start_time#,#period_end_time#,#set_start_time_code#,#worker_name#,#worker_phone#,#team#,#set_id#,#mission_type#,#set_name#,#factory_id#);
     </insert>
 
     <select id="arr-set-mis-insert-get-worker" resultMap="RM.arr-get-worker">

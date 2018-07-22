@@ -97,7 +97,7 @@
 	</update>
 
 	<select id="Mission-Return-List1" resultMap="RM.MissionReturn" >
-		select column_key,note_name,note_content,font_color,font_size,level_one,level_two from mission_return where level_one = #level_one#;
+		select column_key,note_name,note_content,font_color,font_size,level_one,level_two from mission_app_return where level_one = #level_one#;
 	</select>
 
 

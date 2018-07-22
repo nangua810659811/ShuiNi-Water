@@ -69,6 +69,15 @@ public class arrsetmisDO {
 	private String mission_level;
 
 	private String mission_source;
+	private String factory_id;
+
+	public String getFactory_id() {
+		return factory_id;
+	}
+
+	public void setFactory_id(String factory_id) {
+		this.factory_id = factory_id;
+	}
 
 	public String getAuthen_method() {
 		return authen_method;
@@ -146,4 +155,32 @@ public class arrsetmisDO {
 	}
 
 	private String worker_phone;
+
+	public String getSet_name() {
+		return set_name;
+	}
+
+	public void setSet_name(String set_name) {
+		this.set_name = set_name;
+	}
+
+	private String set_name;
+	private String set_id;
+	private String mission_type;
+
+	public String getSet_id() {
+		return set_id;
+	}
+
+	public void setSet_id(String set_id) {
+		this.set_id = set_id;
+	}
+
+	public String getMission_type() {
+		return mission_type;
+	}
+
+	public void setMission_type(String mission_type) {
+		this.mission_type = mission_type;
+	}
 }

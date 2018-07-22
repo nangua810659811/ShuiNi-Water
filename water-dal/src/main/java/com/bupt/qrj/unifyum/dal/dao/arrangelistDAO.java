@@ -18,6 +18,6 @@ import java.util.List;
 public interface arrangelistDAO {
 
 
-	public List<arrangeListDO> listarrangeList(String date,String time);
-	public List<arrangesetmisDO> setmis();
+	public List<arrangeListDO> listarrangeList(String date,String time,String factory_id);
+	public List<arrangesetmisDO> setmis(String factory_id);
 }

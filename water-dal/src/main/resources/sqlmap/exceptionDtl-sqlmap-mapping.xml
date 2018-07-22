@@ -28,20 +28,20 @@
 	</resultMap>
 
 	<select id="select-exception-dtl" resultMap="RM.exceptionDtl">
-		select mission_id,id,workshop,event,checkpoint,level,description,report_worker,report_time,status from exception where level = #status# and report_time between #ymmin# and #ymmax#;
+		select mission_id,id,workshop,event,checkpoint,level,description,report_worker,report_time,status from exception where level = #status# and factory_id = #factory_id# and report_time between #ymmin# and #ymmax#;
 	</select>
 	<select id="select-exception-dtl1" resultMap="RM.exceptionDtl">
-		select mission_id,id,workshop,event,checkpoint,level,description,report_worker,report_time,status from exception order by id desc limit 5;
+		select mission_id,id,workshop,event,checkpoint,level,description,report_worker,report_time,status from exception where factory_id = #factory_id# order by id desc limit 5;
 	</select>
 
 	<insert id="exception-insert">
 		insert into exception
-		(checkpoint,description,report_time,workshop,level,report_worker,pic,jingdu,weidu,mission_id)
-		values(#checkpoint#,#description#,#report_time#,#workshop#,#level#,#report_worker#,#pic#,#jingdu#,#weidu#,#mission_id#);
+		(checkpoint,description,report_time,workshop,level,report_worker,pic,jingdu,weidu,mission_id,factory_id)
+		values(#checkpoint#,#description#,#report_time#,#workshop#,#level#,#report_worker#,#pic#,#jingdu#,#weidu#,#mission_id#,#factory#);
 	</insert>
-	<!--<select id="USER-LIST" resultClass="java.lang.String">-->
-		<!--select user_name from  login	group by user_name;		-->
-	<!--</select>-->
+	<select id="worker-name-insert" resultClass="java.lang.String">
+		select factory_id from worker_info where name = #name# order by id desc limit 1;
+	</select>
 
 	<!--<select id="UNIFYUM-USER-GET" parameterClass="com.bupt.qrj.unifyum.dal.dataobject.UserDO"-->
 		<!--resultMap="RM.User">-->

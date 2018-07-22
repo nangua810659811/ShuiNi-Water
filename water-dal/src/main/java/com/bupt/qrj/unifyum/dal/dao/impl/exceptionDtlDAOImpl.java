@@ -26,20 +26,21 @@ public class exceptionDtlDAOImpl extends SqlMapClientDaoSupport implements excep
     
 	 /** 日志 **/
 /*    private static final Logger LOGGER = LoggerFactory.getLogger(seekwjsDAOImpl.class);*/
-    public List<exceptionDtlDO> list(String ymmin, String ymmax,String status) {
+    public List<exceptionDtlDO> list(String ymmin, String ymmax,String status,String factory_id) {
 
         HashMap<String,Object> abbs = new HashMap<String,Object>();
         abbs.put("ymmin",ymmin);
         abbs.put("ymmax",ymmax);
         abbs.put("status",status);
+        abbs.put("factory_id",factory_id);
         List<exceptionDtlDO> rets = this.getSqlMapClientTemplate().queryForList("select-exception-dtl",abbs);
        
         return rets;
     }
     /*    private static final Logger LOGGER = LoggerFactory.getLogger(seekwjsDAOImpl.class);*/
-    public List<exceptionDtlDO> list1() {
+    public List<exceptionDtlDO> list1(String factory_id) {
 
-        List<exceptionDtlDO> rets = this.getSqlMapClientTemplate().queryForList("select-exception-dtl1");
+        List<exceptionDtlDO> rets = this.getSqlMapClientTemplate().queryForList("select-exception-dtl1",factory_id);
 
         return rets;
     }
@@ -49,4 +50,14 @@ public class exceptionDtlDAOImpl extends SqlMapClientDaoSupport implements excep
         this.getSqlMapClientTemplate().insert("exception-insert",
                 insertExceptionDO);
     }
+
+    public String get(String name) throws DataAccessException {
+
+
+        String rets = (String) this.getSqlMapClientTemplate()
+                .queryForObject("worker-name-insert");
+
+        return rets;
+    }
+
 }

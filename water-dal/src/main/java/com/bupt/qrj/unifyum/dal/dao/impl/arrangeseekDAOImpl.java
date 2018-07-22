@@ -23,23 +23,24 @@ public class arrangeseekDAOImpl extends SqlMapClientDaoSupport implements arrang
     
 	 /** 日志 **/
 /*    private static final Logger LOGGER = LoggerFactory.getLogger(seekwjsDAOImpl.class);*/
-    public List<arrangeseekDO> listarrangeseek(String timemmin) {
+    public List<arrangeseekDO> listarrangeseek(String timemmin,String factory_id) {
 
-//        HashMap<String,Object> abbys = new HashMap<String,Object>();
-//        abbys.put("worker_name",worker_name);
-//        abbys.put("timemmin",timemmin);
-//        abbys.put("timemmax",timemmax);
+        HashMap<String,Object> abbys = new HashMap<String,Object>();
+        abbys.put("factory_id",factory_id);
+        abbys.put("timemmin",timemmin);
+
 /*        System.out.println(timemmin+timemmax);*/
-        List<arrangeseekDO> rets = this.getSqlMapClientTemplate().queryForList("arrange-seek-null", timemmin);
+        List<arrangeseekDO> rets = this.getSqlMapClientTemplate().queryForList("arrange-seek-null", abbys);
         /*System.out.println(rets);*/
         return rets;
     }
-    public List<arrangeseekmisDO> listarrangeseekmis(String timemmin, String timemmax) {
+    public List<arrangeseekmisDO> listarrangeseekmis(String timemmin, String timemmax,String factory_id) {
 
         HashMap<String,Object> abbys = new HashMap<String,Object>();
 
         abbys.put("timemmin",timemmin);
         abbys.put("timemmax",timemmax);
+        abbys.put("factory_id",factory_id);
 //        System.out.println(timemmin+timemmax);
         List<arrangeseekmisDO> rets = this.getSqlMapClientTemplate().queryForList("arrange-seek-mis", abbys);
         /*System.out.println(rets);*/

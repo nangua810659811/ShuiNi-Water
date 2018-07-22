@@ -21,6 +21,13 @@
                 jdbcType="VARCHAR" nullValue="0"/>
     </resultMap>
 
+	<resultMap id="RM.apkinfo"
+			   class="com.bupt.qrj.unifyum.dal.dataobject.apkinfoDO">
+		<result property="version" column="version" javaType="java.lang.String"
+				jdbcType="int" nullValue="0"/>
+		<result property="file" column="file" javaType="java.lang.String"
+				jdbcType="VARCHAR" nullValue="0"/>
+	</resultMap>
 	<!--<insert id="pic-info-insert">-->
 		<!--insert into mission_pic-->
 		<!--(mission_id,pic,pic_class,time)-->
@@ -33,6 +40,10 @@
         select id,pic from exception where id = #id#;
 	</select>
 
+	<select id="find-apk" parameterClass="com.bupt.qrj.unifyum.dal.dataobject.apkinfoDO"
+			resultMap="RM.apkinfo">
+		select version,file from apk_version where version = #version#;
+	</select>
 
 	<select id="find-pic" parameterClass="com.bupt.qrj.unifyum.dal.dataobject.picinfoDO"
 			resultMap="RM.picinfo">
